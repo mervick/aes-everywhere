@@ -35,7 +35,7 @@ class AES256
      * @return string
      * @throws \Exception
      */
-    public static function encrypt($input, $passphrase, $format = self::FORMAT_JSON)
+    public static function encrypt($input, $passphrase, $format = self::FORMAT_CONCAT)
     {
         $input .= '';
         $salt = openssl_random_pseudo_bytes(8);
