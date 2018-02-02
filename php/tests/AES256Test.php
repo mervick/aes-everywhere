@@ -26,6 +26,7 @@ class AES256Test extends TestCase
     {
         $passphrases = require __DIR__ . '/data/passphrases.php';
         $data = require __DIR__ . '/data/data.php';
+        $encryptedArray = json_decode(file_get_contents(__DIR__ . '/data/encrypted.json'), true);
 
         $this->assertNotEmpty($data, 'data.raw can\'t be empty');
         $this->assertNotEmpty($passphrases, 'passphrases can\'t be empty');
@@ -37,6 +38,13 @@ class AES256Test extends TestCase
             foreach ($passphrases as $passKey => $passphrase) {
                 foreach ([AES256::FORMAT_JSON, AES256::FORMAT_CONCAT] as $format) {
                     $encrypted = AES256::encrypt($original, $passphrase, $format);
+
+                    $this->assertArrayHasKey($format, $encryptedArray);
+                    $this->assertArrayHasKey($dataKey, $encryptedArray[$format]);
+                    $this->assertArrayHasKey($passKey, $encryptedArray[$format][$dataKey]);
+
+                    $this->assertTrue($original == AES256::decrypt($encryptedArray[$format][$dataKey][$passKey], $passphrase, $format),
+                        sprintf("Can't decrypt data $sprintfStr from encrypted.json", $dataKey, $passKey, $format));
 
                     if (!empty($original)) {
                         $this->assertNotEmpty($encrypted,
@@ -60,9 +68,6 @@ class AES256Test extends TestCase
                     }
 
                     $decrypted = AES256::decrypt($encrypted, $passphrase, $format);
-
-//                    $this->assertEquals($decrypted, $original,
-//                        sprintf("Decrypted code not equal to original $sprintfStr", $dataKey, $passKey, $format));
 
                     $this->assertTrue($decrypted == $original,
                         sprintf("Decrypted code not equal to original $sprintfStr", $dataKey, $passKey, $format));
