@@ -1,0 +1,33 @@
+{
+  "name": "cross-language-encryption",
+  "version": "1.0.0",
+  "description": "Cross Language Encryption (AES 256)",
+  "main": "javascript/src/aes256.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Andrey Izman",
+    "email": "izmanw@gmail.com",
+    "url": "github.com/mervick"
+  },
+  "keywords": [
+    "croll language encryption",
+    "aes",
+    "cryptography",
+    "encryption"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "browserify-shim": "^3.8.12",
+    "dateformat": "1.0.12",
+    "grunt": "^0.4",
+    "grunt-browserify": "^5.0.0",
+    "grunt-cli": "0.1.13",
+    "load-grunt-tasks": "1.0.0",
+    "node-cryptojs-aes": "^0.4.0",
+    "uglifyify": "^3.0.1"
+  }
+}
