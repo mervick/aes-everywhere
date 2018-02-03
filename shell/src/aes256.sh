@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# aes256.sh
+# author Andrey Izman <izmanw@gmail.com>
+# copyright Andrey Izman (c) 2018
+# license MIT
 
 c='\033[0m'
 b='\033[1m'
@@ -198,9 +202,8 @@ if [[ "$operation" == "decrypt" ]]; then
 
 else # encrypt
     while true; do
-        #salt="$(dd if=/dev/urandom bs=1 count=8 2>/dev/null)"
-        salt="$(openssl rand 8 | tr -d '\n')"
-        salt="$(echo "UWqmvHc+53E=" | base64 --decode)"
+        salt="$(openssl rand 12)"
+        salt="${salt:0:8}"
         salted=""; dx=""
 
         while [[ "${#salted}" -lt 48 ]]; do
@@ -214,30 +217,30 @@ else # encrypt
         iv="$(echo -n "$iv" | xxd -p | tr -d '\n')"
         key="$(echo -n "$key" | xxd -p | tr -d '\n')"
 
-        if [[ ${#iv} != 32 ]]; then
+        if [[ "${#iv}" != 32 || "${#key}" != 64 ]]; then
             continue
-        fi
-
-        if [[ "$in" == "" ]]; then
-            ct="$(echo -n "$STDIN" | openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv")"
-        else
-            ct="$(openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv" -in "$in")"
-        fi
-
-        salt="$(echo -n "$salt" | xxd -p | tr -d '\n')"
-
-        if [[ "$format" == "json" ]]; then
-            result='{"ct":"'"$ct"'","iv":"'"$iv"'","s":"'"$salt"'"}';
-        else
-            result="${salt}${iv}${ct}"
-        fi
-
-        if [[ "$out" == "" ]]; then
-            echo -n "$result"
-        else
-            echo -n "$result" > "$out"
         fi
 
         break
     done
+
+    if [[ "$in" == "" ]]; then
+        ct="$(echo -n "$STDIN" | openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv")"
+    else
+        ct="$(openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv" -in "$in")"
+    fi
+
+    salt="$(echo -n "$salt" | xxd -p | tr -d '\n')"
+
+    if [[ "$format" == "json" ]]; then
+        result='{"ct":"'"$ct"'","iv":"'"$iv"'","s":"'"$salt"'"}';
+    else
+        result="${salt}${iv}${ct}"
+    fi
+
+    if [[ "$out" == "" ]]; then
+        echo -n "$result"
+    else
+        echo -n "$result" > "$out"
+    fi
 fi
