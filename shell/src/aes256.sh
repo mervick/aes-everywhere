@@ -48,7 +48,7 @@ EOF
 
 usage="$(cat << EOF
 usage: aes256 encrypt|decrypt [-p passphrase|--passphrase=passphrase]
-       [-i input_file|--input=input_file] [-o output_file|--out=output_file]
+       [-i input_file|--in=input_file] [-o output_file|--out=output_file]
        [-f format|--format=format]
 EOF
 )"
