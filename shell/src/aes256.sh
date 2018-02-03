@@ -194,12 +194,6 @@ if [[ "$operation" == "decrypt" ]]; then
 
     result="$(echo -n "$ct" | openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv" -d)"
 
-    if [[ "$out" == "" ]]; then
-        echo -n "$result"
-    else
-        echo -n "$result" > "$out"
-    fi
-
 else # encrypt
     while true; do
         salt="$(openssl rand 12)"
@@ -237,10 +231,10 @@ else # encrypt
     else
         result="${salt}${iv}${ct}"
     fi
+fi
 
-    if [[ "$out" == "" ]]; then
-        echo -n "$result"
-    else
-        echo -n "$result" > "$out"
-    fi
+if [[ "$out" == "" ]]; then
+    echo -n "$result"
+else
+    echo -n "$result" > "$out"
 fi
