@@ -7,62 +7,41 @@
 /* jshint node: true */
 'use strict';
 
-const CryptoJS = require('node-cryptojs-aes').CryptoJS;
+var CryptoJS = require('node-cryptojs-aes').CryptoJS;
 
-const ConcatFormatter = {
+var OpenSslFormatter = {
     stringify(params) {
-        return params.salt.toString() + params.iv.toString() + params.ciphertext.toString(CryptoJS.enc.Base64);
+        var salt = CryptoJS.enc.Hex.parse(params.salt.toString()).toString(CryptoJS.enc.Latin1);
+        var ct = params.ciphertext.toString(CryptoJS.enc.Latin1);
+
+        return CryptoJS.enc.Latin1.parse('Salted__' + salt + ct).toString(CryptoJS.enc.Base64);
     },
+
     parse(str) {
-        const ct = str.substr(48),
-            iv = str.substr(16, 32),
-            salt = str.substr(0, 16);
+        var str = CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Latin1);
+        var salted = str.substr(0, 8);
+
+        if (salted !== 'Salted__') {
+            throw new Error('Error parsing salt');
+        }
+
+        var salt = str.substr(8, 8);
+        var ct = str.substr(16);
 
         return CryptoJS.lib.CipherParams.create({
-            ciphertext: CryptoJS.enc.Base64.parse(ct),
-            iv: CryptoJS.enc.Hex.parse(iv),
-            salt: CryptoJS.enc.Hex.parse(salt)
+            ciphertext: CryptoJS.enc.Latin1.parse(ct),
+            salt: CryptoJS.enc.Latin1.parse(salt)
         });
     }
 };
 
-const JsonFormatter = {
-    stringify(params) {
-        return JSON.stringify({
-            ct: params.ciphertext.toString(CryptoJS.enc.Base64),
-            iv: params.iv.toString(),
-            s: params.salt.toString()
-        });
+var AES256 = {
+    encrypt: function(input, passphrase) {
+        return CryptoJS.AES.encrypt(input, passphrase, {format: OpenSslFormatter}).toString();
     },
 
-    parse(json) {
-        const data = JSON.parse(json);
-
-        return CryptoJS.lib.CipherParams.create({
-            ciphertext: CryptoJS.enc.Base64.parse(data.ct),
-            iv: CryptoJS.enc.Hex.parse(data.iv),
-            salt: CryptoJS.enc.Hex.parse(data.s)
-        });
-    }
-};
-
-const AES256 = {
-    encrypt(input, passphrase, format = 'concat') {
-        if (format.toLowerCase() == 'concat') {
-            format = ConcatFormatter;
-        } else {
-            format = JsonFormatter;
-        }
-        return CryptoJS.AES.encrypt(input, passphrase, {format}).toString();
-    },
-
-    decrypt(crypted, passphrase, format = 'concat') {
-        if (format.toLowerCase() == 'concat') {
-            format = ConcatFormatter;
-        } else {
-            format = JsonFormatter;
-        }
-        return CryptoJS.AES.decrypt(crypted, passphrase, {format}).toString(CryptoJS.enc.Utf8);
+    decrypt: function(crypted, passphrase) {
+        return CryptoJS.AES.decrypt(crypted, passphrase, {format: OpenSslFormatter}).toString(CryptoJS.enc.Utf8);
     }
 };
 
