@@ -10,7 +10,7 @@ namespace mervick\aesEverywhere;
 
 /**
  * Class AES256
- * @package mervick\encryption
+ * @package mervick\aesEverywhere
  */
 class AES256
 {

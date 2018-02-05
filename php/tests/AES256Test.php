@@ -6,15 +6,15 @@
  * @license MIT
  */
 
-namespace mervick\encryption\tests;
+namespace mervick\aesEverywhere\tests;
 
-use mervick\encryption\AES256;
+use mervick\aesEverywhere\AES256;
 use PHPUnit\Framework\TestCase;
 
 
 /**
  * Class AES256Test
- * @package mervick\encryption\tests
+ * @package mervick\aesEverywhere\tests
  */
 class AES256Test extends TestCase
 {
