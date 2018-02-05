@@ -31,6 +31,10 @@ module.exports = function (grunt) {
                 ' */';
             const paths = ['./node_modules', './javascript/src'];
 
+            const babelify = {
+                "presets" : ["es2015"],
+            };
+
             return {
                 'watch': {
                     src: src,
@@ -51,7 +55,7 @@ module.exports = function (grunt) {
                         }
                     },
                     transform: [
-                        'babelify'
+                        ['babelify', babelify]
                     ]
                 },
 
@@ -66,7 +70,7 @@ module.exports = function (grunt) {
                         }
                     },
                     transform: [
-                        'babelify'
+                        ['babelify', babelify]
                     ]
                 },
 
@@ -80,7 +84,7 @@ module.exports = function (grunt) {
                         }
                     },
                     transform: [
-                        'babelify',
+                        ['babelify', babelify],
                         'uglifyify'
                     ]
                 },
