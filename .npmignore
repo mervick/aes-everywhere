@@ -1,0 +1,10 @@
+bash/
+cpp/
+java/
+php/
+composer.json
+Makefile
+phpunit.xml
+.travis.yml
+.npmignore
+.gitignore

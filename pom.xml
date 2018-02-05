@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mervick.cross-encryption</groupId>
+    <artifactId>gs-maven</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1.0</version>
+
+    <properties>
+        <src.dir>java/src</src.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.src.directory>java/src</project.src.directory>
+        <project.build.directory>java/target</project.build.directory>
+    </properties>
+
+    <build>
+        <outputDirectory>${project.build.directory}/myclasses</outputDirectory>
+        <sourceDirectory>${src.dir}</sourceDirectory>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>createClassesDir</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <tasks>
+                                <mkdir dir="${project.build.directory}/myclasses" />
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>goal</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>mervick.aesEverywhere.AES256</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>junit</groupId>-->
+                        <!--<artifactId>junit</artifactId>-->
+                        <!--<version>4.12</version>-->
+                        <!--<scope>test</scope>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <!--<configuration>-->
+                            <!--<outputdirectory>${project.build.directory}/lib</outputdirectory>-->
+                            <!--<overwritereleases>false</overwritereleases>-->
+                            <!--<overwritesnapshots>false</overwritesnapshots>-->
+                            <!--<overwriteifnewer>true</overwriteifnewer>-->
+                        <!--</configuration>-->
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>mervick.aesEverywhere.AES256</mainClass>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,69 @@
+sudo: false
+
+matrix:
+    allow_failures:
+        - php: nightly
+
+    include:
+
+        -language: php
+
+            php:
+                - 5.6
+                - 7.0
+                - 7.1
+                - 7.2
+                - hhvm # on Trusty only
+                - nightly
+
+            before_install:
+                - composer self-update
+                - composer clear-cache
+
+            install:
+                - composer install --prefer-source --no-progress --no-suggest --no-interaction --dev
+
+            script:
+                - phpunit
+
+        -language: node_js
+
+            node_js:
+                - "iojs"
+                - "7"
+                - "4.1"
+                - "4.0"
+                - "0.12"
+                - "0.11"
+
+            cache:
+                directories:
+                    - "node_modules"
+
+            install:
+                - npm install
+
+        -language: java
+
+            jdk:
+              - oraclejdk8
+
+        -language: cpp
+
+            -compiler:
+                - g++
+                - clang++
+
+            before_install:
+                - make Makefile clean
+
+            install:
+                - make Makefile all
+
+
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email: false
