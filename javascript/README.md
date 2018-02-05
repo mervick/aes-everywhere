@@ -4,7 +4,7 @@
 
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
-Works well both on the browsers and on the node.js
+Works well both on the browsers and on the node.js  
 Compatible with **React-native**
 
 ### Browser
