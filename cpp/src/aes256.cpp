@@ -1,3 +1,10 @@
+/*!
+ * aes256.cpp
+ * @author Andrey Izman <izmanw@gmail.com>
+ * @copyright Andrey Izman (c) 2018
+ * @license MIT
+ */
+
 #include <stdio.h>
 #include <vector>
 #include <string>
