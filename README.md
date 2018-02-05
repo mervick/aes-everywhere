@@ -8,11 +8,11 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
 ## Supported languages
 
- + bash/shell
- + cpp
- + java
- + javascript
- + php
+ + [bash/shell](https://github.com/mervick/aes-everywhere/tree/master/bash)
+ + [c++](https://github.com/mervick/aes-everywhere/tree/master/cpp)
+ + [java](https://github.com/mervick/aes-everywhere/tree/master/java)
+ + [javascript](https://github.com/mervick/aes-everywhere/tree/master/javascript)
+ + [php](https://github.com/mervick/aes-everywhere/tree/master/php)
 
 
 ### TODO
