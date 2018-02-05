@@ -167,69 +167,13 @@ if [[ "$operation" == "decrypt" ]]; then
         in="$STDIN"
     fi
 
-    iv=""; salt=""; ct=""
+    result="$(echo -n "$in" | openssl enc -aes-256-cbc -a -A -pass "pass:${passphrase}" -d)"
 
-    if [[ "$format" == "json" ]]; then
-        ct="$(echo -n "$in" | sed -s 's/^.*"ct":"\([^"]*\)".*$/\1/')"
-        iv="$(echo -n "$in" | sed -s 's/^.*"iv":"\([^"]*\)".*$/\1/')"
-        salt="$(echo -n "$in" | sed -s 's/^.*"s":"\([^"]*\)".*$/\1/' | xxd -r -p)"
-    else
-        ct="${in:48}"
-        iv="${in:16:32}"
-        salt="$(echo "${in:0:16}" | xxd -r -p)"
-    fi
-
-    concatenated="${passphrase}${salt}";
-    md5_0="$(echo -n "$concatenated" | md5sum | sed -s 's/\s*-$//' | xxd -r -p)"
-    salted="$md5_0"
-
-    while [[ "${#salted}" -lt 32 ]]; do
-        md5_1="$(echo -n "${md5_0}${concatenated}" | md5sum | sed -s 's/\s*-$//' | xxd -r -p)"
-        salted="${salted}${md5_1}"
-        md5_0="$md5_1"
-    done
-
-    key="${salted:0:32}"
-    key="$(echo -n "$key" | xxd -p | tr -d '\n')"
-
-    result="$(echo -n "$ct" | openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv" -d)"
-
-else # encrypt
-    while true; do
-        salt="$(openssl rand 12)"
-        salt="${salt:0:8}"
-        salted=""; dx=""
-
-        while [[ "${#salted}" -lt 48 ]]; do
-            dx="$(echo -n "${dx}${passphrase}${salt}" | md5sum | sed -s 's/\s*-$//' | xxd -r -p)"
-            salted="${salted}${dx}"
-        done
-
-        key="${salted:0:32}"
-        iv="${salted:32:16}"
-
-        iv="$(echo -n "$iv" | xxd -p | tr -d '\n')"
-        key="$(echo -n "$key" | xxd -p | tr -d '\n')"
-
-        if [[ "${#iv}" != 32 || "${#key}" != 64 ]]; then
-            continue
-        fi
-
-        break
-    done
-
+else
     if [[ "$in" == "" ]]; then
-        ct="$(echo -n "$STDIN" | openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv")"
+        result="$(echo -n "$STDIN" | openssl enc -aes-256-cbc -a -A -pass "pass:${passphrase}")"
     else
-        ct="$(openssl enc -aes-256-cbc -nosalt -A -a -K "$key" -iv "$iv" -in "$in")"
-    fi
-
-    salt="$(echo -n "$salt" | xxd -p | tr -d '\n')"
-
-    if [[ "$format" == "json" ]]; then
-        result='{"ct":"'"$ct"'","iv":"'"$iv"'","s":"'"$salt"'"}';
-    else
-        result="${salt}${iv}${ct}"
+        result="$(openssl enc -aes-256-cbc -a -A -pass "pass:${passphrase}" -in "$in")"
     fi
 fi
 
