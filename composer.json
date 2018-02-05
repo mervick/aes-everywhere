@@ -1,6 +1,6 @@
 {
-    "name": "mervick/cross-language-encryption",
-    "description": "Cross Language Encryption (AES 256)",
+    "name": "mervick/aes-everywhere",
+    "description": "Aes Everywhere - Cross Language Encryption Library (AES/256/CBC/PKCS5)",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -17,8 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "mervick\\encryption\\tests\\": "php//tests//",
-            "mervick\\encryption\\": "php//src//"
+            "mervick\\aesEverywhere\\tests\\": "php//tests//",
+            "mervick\\aesEverywhere\\": "php//src//"
         }
     },
     "require-dev": {

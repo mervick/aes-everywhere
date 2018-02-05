@@ -1,7 +1,7 @@
 {
-  "name": "cross-language-encryption",
+  "name": "aes-everywhere",
   "version": "1.0.0",
-  "description": "Cross Language Encryption (AES 256)",
+  "description": "AES Everywhere - Cross Language Encryption (AES 256)",
   "main": "javascript/src/aes256.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

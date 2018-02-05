@@ -1,5 +1,6 @@
 /**
  * aes256.js
+ * AES Everywhere - Cross Language Encryption Library
  * @author Andrey Izman <izmanw@gmail.com>
  * @copyright Andrey Izman (c) 2018
  * @license MIT

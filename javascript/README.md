@@ -1,4 +1,4 @@
-# Aes Everywhere - Cross Language Encryption Library
+# AES Everywhere - Cross Language Encryption Library
 
 ## JavaScript version
 

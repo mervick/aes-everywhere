@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # aes256.sh
+# AES Everywhere - Cross Language Encryption Library
 # author Andrey Izman <izmanw@gmail.com>
 # copyright Andrey Izman (c) 2018
 # license MIT
