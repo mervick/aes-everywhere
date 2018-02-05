@@ -1,4 +1,4 @@
-# Aes Everywhere - Cross Language Encryption Library
+# AES Everywhere - Cross Language Encryption Library
 
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
