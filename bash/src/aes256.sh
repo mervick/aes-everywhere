@@ -168,13 +168,13 @@ if [[ "$operation" == "decrypt" ]]; then
         in="$STDIN"
     fi
 
-    result="$(echo -n "$in" | openssl enc -aes-256-cbc -a -A -pass "pass:${passphrase}" -d)"
+    result="$(echo -n "$in" | openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:${passphrase}" -d)"
 
 else
     if [[ "$in" == "" ]]; then
-        result="$(echo -n "$STDIN" | openssl enc -aes-256-cbc -a -A -pass "pass:${passphrase}")"
+        result="$(echo -n "$STDIN" | openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:${passphrase}")"
     else
-        result="$(openssl enc -aes-256-cbc -a -A -pass "pass:${passphrase}" -in "$in")"
+        result="$(openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:${passphrase}" -in "$in")"
     fi
 fi
 
