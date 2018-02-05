@@ -219,18 +219,3 @@ string AES256::decryptFinal(unsigned char *ciphertext, int ciphertext_len, unsig
     delete[] plaintext;
     return ret;
 }
-
-int main(int argc, char ** argv)
-{
-    cout << AES256::encrypt("text", "pass") << endl;
-    cout << AES256::encrypt("text", "pass") << endl;
-    cout << AES256::encrypt("text", "pass") << endl;
-    cout << AES256::encrypt("text", "pass") << endl;
-    cout << AES256::encrypt("text", "pass") << endl;
-//    string enc = encrypt("text", "pass");
-//    cout << enc << endl;
-    cout << AES256::decrypt("U2FsdGVkX19Raqa8dz7ncfv0lm4XgSCSpl4PB2vN3UA=", "pass") << endl;
-    cout << AES256::decrypt("U2FsdGVkX19Raqa8dz7ncfv0lm4XgSCSpl4PB2vN3UA=", "pass") << endl;
-    cout << AES256::decrypt("U2FsdGVkX19Raqa8dz7ncfv0lm4XgSCSpl4PB2vN3UA=", "pass") << endl;
-    return 0;
-}
