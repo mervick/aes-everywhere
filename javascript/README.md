@@ -4,7 +4,7 @@
 
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
-Works well both on the browsers and on the node.js  
+Works well both on the browsers and on the node.js
 Compatible with **React-native**
 
 ### Browser
@@ -20,7 +20,7 @@ Usage:
 console.log(AES256.encrypt('TEXT', 'PASSWORD'));
 
 // decryption
-console.log(AES256.decrypt('ENCRYPTED", 'PASSWORD'));
+console.log(AES256.decrypt('ENCRYPTED', 'PASSWORD'));
 ```
 
 
@@ -39,6 +39,6 @@ import AES256 from 'aes-everywhere';
 console.log(AES256.encrypt('TEXT', 'PASSWORD'));
 
 // decryption
-console.log(AES256.decrypt('ENCRYPTED", 'PASSWORD'));
+console.log(AES256.decrypt('ENCRYPTED', 'PASSWORD'));
 
 ```
