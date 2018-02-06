@@ -17,7 +17,7 @@ __copyright__ = "Copyright 2018 Andrey Izman"
 __license__   = "MIT"
 
 
-class AES256:
+class aes256:
 
     BLOCK_SIZE = 16
     KEY_LEN = 32
@@ -35,7 +35,7 @@ class AES256:
         salt = Random.new().read(8)
         key, iv = self.__derive_key_and_iv(passphrase, salt)
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        return base64.b64encode('Salted__' + salt + cipher.encrypt(self.__pkcs5_pad(raw)))
+        return base64.b64encode('Salted__' + salt + cipher.encrypt(self.__pkcs5_padding(raw)))
 
     def decrypt(self, enc, passphrase):
         """
@@ -53,9 +53,9 @@ class AES256:
         salt = ct[8:16]
         key, iv = self.__derive_key_and_iv(passphrase, salt)
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        return self.__pkcs5_unpad(cipher.decrypt(ct[16:]))
+        return self.__pkcs5_trimming(cipher.decrypt(ct[16:]))
 
-    def __pkcs5_pad(self, s):
+    def __pkcs5_padding(self, s):
         """
         Padding to blocksize according to PKCS #5
         calculates the number of missing chars to BLOCK_SIZE and pads with
@@ -67,9 +67,9 @@ class AES256:
         """
         return s + (self.BLOCK_SIZE - len(s) % self.BLOCK_SIZE) * chr(self.BLOCK_SIZE - len(s) % self.BLOCK_SIZE)
 
-    def __pkcs5_unpad(self, s):
+    def __pkcs5_trimming(self, s):
         """
-        Unpadding according to PKCS #5
+        Trimming according to PKCS #5
         @param s: string Text to unpad
         @type s: string
         @rtype: string
@@ -93,4 +93,4 @@ class AES256:
 
 
 if __name__ == '__main__':    #code to execute if called from command-line
-    print(AES256().decrypt(AES256().encrypt("text", "pass"), "pass"))
+    print(aes256().decrypt(aes256().encrypt("text", "pass"), "pass"))
