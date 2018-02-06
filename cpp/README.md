@@ -8,10 +8,9 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
 ```cpp
 // encryption
-std::string encrypted = AES256.encrypt("TEXT", "PASSWORD"));
+std::string encrypted = AES256::encrypt("TEXT", "PASSWORD"));
 
 // decryption
-std::string decrypted = AES256.decrypt("ENCRYPTED", "PASSWORD"));
-
+std::string decrypted = AES256::decrypt("ENCRYPTED", "PASSWORD"));
 ```
 

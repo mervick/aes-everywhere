@@ -38,16 +38,19 @@ string decryptFinal(unsigned char *ciphertext, int ciphertext_len, unsigned char
     bzero(plaintext, ciphertext_len);
 
     if (!(ctx = EVP_CIPHER_CTX_new())) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
     if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv)) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
     EVP_CIPHER_CTX_set_key_length(ctx, EVP_MAX_KEY_LENGTH);
 
     if (1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len)) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
@@ -55,13 +58,16 @@ string decryptFinal(unsigned char *ciphertext, int ciphertext_len, unsigned char
     int pad_len;
 
     if (1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len)) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
     plaintext_len += len;
     plaintext[plaintext_len] = 0;
 
+    EVP_CIPHER_CTX_cleanup(ctx);
     EVP_CIPHER_CTX_free(ctx);
+
     string ret = (char *) plaintext;
     delete[] plaintext;
     return ret;
@@ -111,14 +117,17 @@ string encryptFinal(unsigned char *text, int text_len, unsigned char *key, unsig
     bzero(plaintext, text_len);
 
     if (!(ctx = EVP_CIPHER_CTX_new())) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
     if (1 != EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv)) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
     EVP_CIPHER_CTX_set_key_length(ctx, EVP_MAX_KEY_LENGTH);
     if (1 != EVP_EncryptUpdate(ctx, plaintext, &len, text, text_len)) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
@@ -126,13 +135,16 @@ string encryptFinal(unsigned char *text, int text_len, unsigned char *key, unsig
     int pad_len;
 
     if (1 != EVP_EncryptFinal_ex(ctx, plaintext + len, &len)) {
+        EVP_CIPHER_CTX_cleanup(ctx);
         handleOpenSSLErrors();
     }
 
     plaintext_len += len;
     plaintext[plaintext_len] = 0;
 
+    EVP_CIPHER_CTX_cleanup(ctx);
     EVP_CIPHER_CTX_free(ctx);
+
     string ret = (char *) plaintext;
     delete[] plaintext;
     return ret;
