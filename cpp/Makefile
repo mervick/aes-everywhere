@@ -3,8 +3,8 @@
 CFLAGS = $(OPENSSL_INCS_LOCATION) -std=gnu++11 -g -Wall -Wno-comment -Wno-parentheses -Wno-unused-variable -Wno-maybe-uninitialized
 LDFLAGS = $(OPENSSL_LIBS_LOCATION) -lssl -lcrypto
 
-DIR = cpp/src
-TARGET = aes
+DIR = src
+TARGET = aes256
 
 all: $(TARGET)
 

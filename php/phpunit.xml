@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit colors="true" bootstrap="php/tests/autoload.php">
-    <testsuite name='Cross Language Encryption'>
-        <directory suffix='.php'>./php/tests/</directory>
+    <testsuite name='Test AES256 PHP version'>
+        <directory suffix='.php'>./tests/</directory>
     </testsuite>
 </phpunit>

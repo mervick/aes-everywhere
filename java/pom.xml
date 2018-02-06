@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>mervick.cross-encryption</groupId>
+    <groupId>mervick.aesEverywhere</groupId>
     <artifactId>gs-maven</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
 
     <properties>
-        <src.dir>java/src</src.dir>
+        <src.dir>src</src.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.src.directory>java/src</project.src.directory>
-        <project.build.directory>java/target</project.build.directory>
+        <project.src.directory>src</project.src.directory>
+        <project.build.directory>target</project.build.directory>
     </properties>
 
     <build>
