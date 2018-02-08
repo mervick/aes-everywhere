@@ -78,7 +78,7 @@ class aes256:
 
     def __derive_key_and_iv(self, password, salt):
         """
-        Unpadding according to PKCS #5
+        Derive key and iv
         @param password: string Password
         @param salt: string Salt
         @type password: string
