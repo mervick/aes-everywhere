@@ -2,7 +2,7 @@
 
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
-## PHP version
+## PHP implementation
 
 Requirements: php >= 5.3.0
 

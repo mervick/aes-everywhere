@@ -1,20 +1,21 @@
-# AES Everywhere - Cross Language Encryption Library  (Bash, C++, Go, Java, JavaScript, PHP, Python)
+# AES Everywhere - Cross Language Encryption Library  (Bash, C++, C#, GoLang, Java, JavaScript, PHP, Python)
 
 AES Everywhere is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
 
-It generate OpenSSL compatible code.  
+It implements OpenSSL compatible cipher.  
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
 
-## Supported languages
+## Implementations
 
- + [bash/shell](https://github.com/mervick/aes-everywhere/tree/master/bash)
- + [c++](https://github.com/mervick/aes-everywhere/tree/master/cpp)
- + [go](https://github.com/mervick/aes-everywhere/tree/master/go)
- + [java](https://github.com/mervick/aes-everywhere/tree/master/java)
- + [javascript](https://github.com/mervick/aes-everywhere/tree/master/javascript)
- + [php](https://github.com/mervick/aes-everywhere/tree/master/php)
- + [python](https://github.com/mervick/aes-everywhere/tree/master/python)
+ + [Bash/Shell](https://github.com/mervick/aes-everywhere/tree/master/bash)
+ + [C++](https://github.com/mervick/aes-everywhere/tree/master/cpp)
+ + [C#](https://github.com/mervick/aes-everywhere/tree/master/net)
+ + [GoLang](https://github.com/mervick/aes-everywhere/tree/master/go)
+ + [Java](https://github.com/mervick/aes-everywhere/tree/master/java)
+ + [JavaScript](https://github.com/mervick/aes-everywhere/tree/master/javascript)
+ + [PHP](https://github.com/mervick/aes-everywhere/tree/master/php)
+ + [Python](https://github.com/mervick/aes-everywhere/tree/master/python)
 
 
 ### TODO
@@ -23,4 +24,3 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
  + swift
  + objective-C
  + perl
- + net

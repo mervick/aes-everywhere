@@ -1,6 +1,6 @@
 # AES Everywhere - Cross Language Encryption Library
 
-## JavaScript version
+## JavaScript implementation
 
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
