@@ -1,6 +1,6 @@
 # AES Everywhere - Cross Language Encryption Library
 
-## GO implementation
+## GoLang implementation
 
 Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
