@@ -1,11 +1,11 @@
 /**
- * AES256.java
+ * Aes256.java
  * AES Everywhere - Cross Language Encryption Library
  * @author Andrey Izman <izmanw@gmail.com>
  * @copyright Andrey Izman (c) 2018
  * @license MIT
  */
-package mervick.aesEverywhere;
+package dev.mervick;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -23,7 +23,7 @@ import static java.nio.charset.StandardCharsets.*;
  * @author Robert {@link https://stackoverflow.com/users/512605/robert}
  * @link https://stackoverflow.com/questions/32508961/java-equivalent-of-an-openssl-aes-cbc-encryption
  */
-class AES256
+class Aes256
 {
     /**
      * OpenSSL"s magic initial bytes.

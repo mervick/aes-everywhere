@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>mervick.aesEverywhere</groupId>
+    <groupId>dev.mervick</groupId>
     <artifactId>gs-maven</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
@@ -53,7 +53,7 @@
                             <transformers>
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>mervick.aesEverywhere.AES256</mainClass>
+                                    <mainClass>dev.mervick.Aes256</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -94,7 +94,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>mervick.aesEverywhere.AES256</mainClass>
+                    <mainClass>dev.mervick.Aes256</mainClass>
                 </configuration>
             </plugin>
 
