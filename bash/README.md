@@ -35,13 +35,13 @@ bash ./aes256.sh decrypt -p "PASSWORD" --in path/to/encrypted-file --out path/to
 
 ```bash
 # encrypt
-echo -n "TEXT" | openssl enc -aes-256-cbc -a -A -pass "pass:PASSWORD"
+echo -n "TEXT" | openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:PASSWORD"
 # from file to file
-openssl enc -aes-256-cbc -a -A -md md5 -pass "pass:PASSWORD" -in path/to/text-file -out path/to/encrypted-file
+openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:PASSWORD" -in path/to/text-file -out path/to/encrypted-file
 
 # decrypt
-echo -n "ENCRYPTED" | openssl enc -aes-256-cbc -a -A -pass "pass:PASSWORD" -d
+echo -n "ENCRYPTED" | openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:PASSWORD" -d
 # from file to file
-openssl enc -aes-256-cbc -a -A -md md5 -pass "pass:PASSWORD" -in path/to/encrypted-file -out path/to/text-file -d
+openssl enc -aes-256-cbc -md md5 -a -A -pass "pass:PASSWORD" -in path/to/encrypted-file -out path/to/text-file -d
 
 ```
