@@ -6,6 +6,7 @@ AES Everywhere - Cross Language Encryption Library
 (c) Andrey Izman <izmanw@gmail.com>
 """
 
+import sys
 import base64
 from hashlib import md5
 from Crypto import Random
@@ -35,7 +36,7 @@ class aes256:
         salt = Random.new().read(8)
         key, iv = self.__derive_key_and_iv(passphrase, salt)
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        return base64.b64encode('Salted__' + salt + cipher.encrypt(self.__pkcs5_padding(raw)))
+        return base64.b64encode(b'Salted__' + salt + cipher.encrypt(self.__pkcs5_padding(raw)))
 
     def decrypt(self, enc, passphrase):
         """
@@ -48,8 +49,8 @@ class aes256:
         """
         ct = base64.b64decode(enc)
         salted = ct[:8]
-        if salted != 'Salted__':
-            return "s"
+        if salted != b'Salted__':
+            return ""
         salt = ct[8:16]
         key, iv = self.__derive_key_and_iv(passphrase, salt)
         cipher = AES.new(key, AES.MODE_CBC, iv)
@@ -74,7 +75,9 @@ class aes256:
         @type s: string
         @rtype: string
         """
-        return s[0:-ord(s[-1])]
+        if sys.version_info[0] == 2:
+            return s[0:-ord(s[-1])]
+        return s[0:-s[-1]]
 
     def __derive_key_and_iv(self, password, salt):
         """
@@ -85,9 +88,9 @@ class aes256:
         @type salt: string
         @rtype: string
         """
-        d = d_i = ''
+        d = d_i = b''
         while len(d) < self.KEY_LEN + self.IV_LEN:
-            d_i = md5(d_i + password + salt).digest()
+            d_i = md5(d_i + password.encode('utf-8') + salt).digest()
             d += d_i
         return d[:self.KEY_LEN], d[self.KEY_LEN:self.KEY_LEN + self.IV_LEN]
 
