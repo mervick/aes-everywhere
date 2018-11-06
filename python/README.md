@@ -11,9 +11,10 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 from aes256 import aes256
 
 # encryption
-print(aes256().encrypt('TEXT', 'PASSWORD'))
+encrypted = aes256().encrypt('TEXT', 'PASSWORD')
+print(encrypted)
 
 # decryption
-print(aes256().decrypt('ENCRYPTED', 'PASSWORD'))
+print(aes256().decrypt(encrypted, 'PASSWORD'))
 ```
 
