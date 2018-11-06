@@ -21,7 +21,7 @@ System.out.println(decrypted);
 
 ```
 
-Android with API level &lt; 26:
+#### Android with API level &lt; 26:
 
 ```java
 import dev.mervick.android.Aes256;
@@ -37,7 +37,7 @@ String decrypted = Aes256.decrypt(encrypted, "PASSWORD");
 System.out.println(decrypted);
 ```
 
-### Known issues
+## Known issues
 
 [java.security.InvalidKeyException: Illegal key size](https://github.com/mervick/aes-everywhere/issues/5)
 
