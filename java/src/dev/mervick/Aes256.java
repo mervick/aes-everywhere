@@ -124,5 +124,10 @@ class Aes256
      */
     public static void main(String[] args) throws Exception
     {
+        String encrypted = Aes256.encrypt("TEXT", "PASSWORD");
+        System.out.println(encrypted);
+
+        String decrypted = Aes256.decrypt(encrypted, "PASSWORD");
+        System.out.println(decrypted);
     }
 }
