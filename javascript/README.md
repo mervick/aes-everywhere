@@ -34,6 +34,8 @@ npm install aes-everywhere
 Usage:
 ```js
 var AES256  = require('aes-everywhere');
+// or
+// import AES256 from 'aes-everywhere';
 
 // encryption
 encrypted = AES256.encrypt('TEXT', 'PASSWORD')
