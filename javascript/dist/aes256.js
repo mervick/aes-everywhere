@@ -1,7 +1,7 @@
 /*!
  * aes256.js v1.0.0
  * @author Andrey Izman <izmanw@gmail.com>
- * @copyright Andrey Izman (c) 2018
+ * @copyright Andrey Izman (c) 2019
  * @license MIT
  */
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
@@ -54,6 +54,7 @@ var AES256 = {
 };
 
 module.exports = AES256;
+if (window) window.AES256 = AES256;
 
 },{"node-cryptojs-aes":2}],2:[function(require,module,exports){
 var CryptoJS = require('./lib/core').CryptoJS;

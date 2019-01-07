@@ -47,3 +47,4 @@ var AES256 = {
 };
 
 module.exports = AES256;
+if (window) window.AES256 = AES256;
