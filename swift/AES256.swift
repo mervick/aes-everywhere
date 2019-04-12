@@ -37,10 +37,19 @@ class AES256 {
         return Data(outputBytes)
     }
     
-    func decrypt(data cipherData: Data, key: Data, iv: Data) throws -> Data {
+    func decrypt(input: String, password: String) throws -> String? {
+        let inputData = Data(base64Encoded: input)!
+        
+        let salt: Data = inputData[8...15]
+        
+        let passwordData = password.data(using: .utf8)!
+        
+        let key = try! derivateKey(passphrase: passwordData, salt: salt) // 0 ... 32, iv - 43 ... 48
+        
+        let iv = key[32...47]
         
         let ivBlock = iv.prefix(kCCBlockSizeAES128)
-        let cipherTextBytes = cipherData
+        let cipherTextBytes = inputData[15...]
             .suffix(from: kCCBlockSizeAES128)
         let cipherTextLength = cipherTextBytes.count
         var outputBuffer = Array<UInt8>(repeating: 0, count: cipherTextLength)
@@ -58,12 +67,20 @@ class AES256 {
                              cipherTextLength,
                              &numBytesDecrypted)
         
+        
+        
         guard status == kCCSuccess else {
             throw Error.decryptionFailed(status: status)
         }
         
         let outputBytes = outputBuffer.prefix(numBytesDecrypted)
-        return Data(outputBytes)
+        
+        let outputData: Data = Data(outputBytes)
+        if let decryptedText: String = String(data: outputData, encoding: .utf8) {
+            return decryptedText
+        } else {
+            return nil
+        }
     }
     
     func derivateKey(passphrase: Data, salt: Data) throws -> Data {
@@ -102,7 +119,7 @@ private enum Error: Swift.Error {
     case decryptionFailed(status: CCCryptorStatus)
 }
 
-private extension Data {
+extension Data {
     
     var hexString: String? {
         return withUnsafeBytes { (bytes: UnsafePointer<UInt8>) in
