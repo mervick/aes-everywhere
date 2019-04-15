@@ -17,9 +17,9 @@ class AES256 {
         
         let passwordData = password.data(using: .utf8)!
         
-        let saltData = "Labrador".data(using: .utf8)!
+        let salt = "Labrador".data(using: .utf8)!
         
-        let key: Data = try! derivateKey(passphrase: passwordData, salt: saltData)
+        let key: Data = try! derivateKey(passphrase: passwordData, salt: salt)
         
         let iv = key[32...47]
         
@@ -43,7 +43,13 @@ class AES256 {
             throw Error.encryptionFailed(status: status)
         }
         
-        let outputBytes = saltData + outputBuffer.prefix(numBytesEncrypted)
+        
+        let salted = Data("Salted__".utf8)
+        
+        let saltedWithSalt = salted + salt
+        
+        let outputBytes = saltedWithSalt + outputBuffer.prefix(numBytesEncrypted)
+        
         let encrypted: String = outputBytes.base64EncodedString()
         
         return encrypted
@@ -51,9 +57,15 @@ class AES256 {
     
     func decrypt(input: String, password: String) throws -> String? {
         
-        let inputData = Data(base64Encoded: input)!
+        var inputData = Data(base64Encoded: input)!
         
-        let salt: Data = inputData[...7]
+        if let salted = String(data: inputData[...7], encoding: .utf8) {
+            if salted != "Salted__" {
+                return nil
+            }
+        }
+        
+        let salt: Data = inputData[8...15]
         
         let passwordData = password.data(using: .utf8)!
         
@@ -62,7 +74,7 @@ class AES256 {
         let iv = key[32...47]
         
         let ivBlock = iv.prefix(kCCBlockSizeAES128)
-        let cipherTextBytes = inputData[8...]
+        let cipherTextBytes = inputData[16...]
         
         let cipherTextLength = cipherTextBytes.count
         var outputBuffer = Array<UInt8>(repeating: 0, count: cipherTextLength)
