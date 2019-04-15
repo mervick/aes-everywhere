@@ -11,7 +11,17 @@ import CommonCrypto
 
 class AES256 {
     
-    func encrypt(data: Data, key: Data, iv: Data) throws -> Data {
+    func encrypt(input: String, password: String) throws -> String? {
+        
+        let data = input.data(using: .utf8)!
+        
+        let passwordData = password.data(using: .utf8)!
+        
+        let saltData = "Labrador".data(using: .utf8)!
+        
+        let key: Data = try! derivateKey(passphrase: passwordData, salt: saltData)
+        
+        let iv = key[32...47]
         
         let outputLength = data.count + kCCBlockSizeAES128
         var outputBuffer = Array<UInt8>(repeating: 0, count: outputLength)
@@ -33,24 +43,27 @@ class AES256 {
             throw Error.encryptionFailed(status: status)
         }
         
-        let outputBytes = iv + outputBuffer.prefix(numBytesEncrypted)
-        return Data(outputBytes)
+        let outputBytes = saltData + outputBuffer.prefix(numBytesEncrypted)
+        let encrypted: String = outputBytes.base64EncodedString()
+        
+        return encrypted
     }
     
     func decrypt(input: String, password: String) throws -> String? {
+        
         let inputData = Data(base64Encoded: input)!
         
-        let salt: Data = inputData[8...15]
+        let salt: Data = inputData[...7]
         
         let passwordData = password.data(using: .utf8)!
         
-        let key = try! derivateKey(passphrase: passwordData, salt: salt) // 0 ... 32, iv - 43 ... 48
+        let key = try! derivateKey(passphrase: passwordData, salt: salt)
         
         let iv = key[32...47]
         
         let ivBlock = iv.prefix(kCCBlockSizeAES128)
-        let cipherTextBytes = inputData[15...]
-            .suffix(from: kCCBlockSizeAES128)
+        let cipherTextBytes = inputData[8...]
+        
         let cipherTextLength = cipherTextBytes.count
         var outputBuffer = Array<UInt8>(repeating: 0, count: cipherTextLength)
         var numBytesDecrypted = 0
