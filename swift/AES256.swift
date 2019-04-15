@@ -108,7 +108,7 @@ class AES256 {
         }
     }
     
-    func derivateKey(passphrase: Data, salt: Data) throws -> Data {
+    private func derivateKey(passphrase: Data, salt: Data) throws -> Data {
         var salted: Data = Data()
         
         var dxData = Data()
@@ -144,9 +144,9 @@ private enum Error: Swift.Error {
     case decryptionFailed(status: CCCryptorStatus)
 }
 
-extension Data {
+private extension Data {
     
-    var hexString: String? {
+    private var hexString: String? {
         return withUnsafeBytes { (bytes: UnsafePointer<UInt8>) in
             let charA = UInt8(UnicodeScalar("a").value)
             let char0 = UInt8(UnicodeScalar("0").value)
