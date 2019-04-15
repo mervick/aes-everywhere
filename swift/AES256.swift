@@ -11,15 +11,15 @@ import CommonCrypto
 
 class AES256 {
     
-    func encrypt(input: String, password: String) throws -> String? {
+    func encrypt(input: String, password: String) throws -> String {
         
         let data = input.data(using: .utf8)!
         
         let passwordData = password.data(using: .utf8)!
         
-        let salt = "Labrador".data(using: .utf8)!
+        let salt = randomString(length: 8).data(using: .utf8)!
         
-        let key: Data = try! derivateKey(passphrase: passwordData, salt: salt)
+        let key: Data = derivateKey(passphrase: passwordData, salt: salt)
         
         let iv = key[32...47]
         
@@ -40,7 +40,7 @@ class AES256 {
                              &numBytesEncrypted)
         
         guard status == kCCSuccess else {
-            throw Error.encryptionFailed(status: status)
+            throw EncryptionError.encryptionFailed(status: status)
         }
         
         
@@ -55,13 +55,13 @@ class AES256 {
         return encrypted
     }
     
-    func decrypt(input: String, password: String) throws -> String? {
+    func decrypt(input: String, password: String) throws -> String {
         
         var inputData = Data(base64Encoded: input)!
         
         if let salted = String(data: inputData[...7], encoding: .utf8) {
             if salted != "Salted__" {
-                return nil
+                throw ValidationError.saltedNotFound
             }
         }
         
@@ -69,7 +69,7 @@ class AES256 {
         
         let passwordData = password.data(using: .utf8)!
         
-        let key = try! derivateKey(passphrase: passwordData, salt: salt)
+        let key = derivateKey(passphrase: passwordData, salt: salt)
         
         let iv = key[32...47]
         
@@ -95,7 +95,7 @@ class AES256 {
         
         
         guard status == kCCSuccess else {
-            throw Error.decryptionFailed(status: status)
+            throw EncryptionError.decryptionFailed(status: status)
         }
         
         let outputBytes = outputBuffer.prefix(numBytesDecrypted)
@@ -104,11 +104,11 @@ class AES256 {
         if let decryptedText: String = String(data: outputData, encoding: .utf8) {
             return decryptedText
         } else {
-            return nil
+            throw ValidationError.decryptionFailed
         }
     }
     
-    private func derivateKey(passphrase: Data, salt: Data) throws -> Data {
+    private func derivateKey(passphrase: Data, salt: Data) -> Data {
         var salted: Data = Data()
         
         var dxData = Data()
@@ -136,12 +136,35 @@ class AES256 {
         return digestData
     }
     
+    private func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
 }
 
-private enum Error: Swift.Error {
+private enum ValidationError: Swift.Error {
+    case saltedNotFound
+    case decryptionFailed
+}
+
+private enum EncryptionError: Swift.Error {
     case keyDerivationFailed(status: CCCryptorStatus)
     case encryptionFailed(status: CCCryptorStatus)
     case decryptionFailed(status: CCCryptorStatus)
+}
+
+extension ValidationError: LocalizedError {
+    
+    public var errorDescription: String? {
+        switch self {
+        case .saltedNotFound:
+            return NSLocalizedString("Salted__ not found", comment: "Probably encryption was not finished properly")
+        case .decryptionFailed:
+            return NSLocalizedString("Failed decode Data object to String", comment: "Probably failed due to invalid key. Check is password correct.")
+        }
+    }
+    
 }
 
 private extension Data {
