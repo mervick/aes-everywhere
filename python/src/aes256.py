@@ -66,7 +66,9 @@ class aes256:
         @type s: string
         @rtype: string
         """
-        s = s + (self.BLOCK_SIZE - len(s) % self.BLOCK_SIZE) * chr(self.BLOCK_SIZE - len(s) % self.BLOCK_SIZE)
+        # getting the length after encoding ensures that characters such as © & 😀 are safe
+        length_of_s = len(s.encode('utf-8'))
+        s = s + (self.BLOCK_SIZE - length_of_s % self.BLOCK_SIZE) * chr(self.BLOCK_SIZE - length_of_s % self.BLOCK_SIZE)
         if sys.version_info[0] == 2:
             return s
         return bytes(s, 'utf-8')
