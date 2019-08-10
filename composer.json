@@ -9,7 +9,7 @@
             "email": "izmanw@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist",
