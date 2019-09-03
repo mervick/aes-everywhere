@@ -66,10 +66,10 @@ class aes256:
         @type s: string
         @rtype: string
         """
-        s = s + (self.BLOCK_SIZE - len(s) % self.BLOCK_SIZE) * chr(self.BLOCK_SIZE - len(s) % self.BLOCK_SIZE)
-        if sys.version_info[0] == 2:
-            return s
-        return bytes(s, 'utf-8')
+        py2 = sys.version_info[0] == 2
+        s_len = len(s if py2 else s.encode('utf-8'))
+        s = s + (self.BLOCK_SIZE - s_len % self.BLOCK_SIZE) * chr(self.BLOCK_SIZE - s_len % self.BLOCK_SIZE)
+        return s if py2 else bytes(s, 'utf-8')
 
     def __pkcs5_trimming(self, s):
         """
