@@ -1,29 +1,49 @@
 /*!
  * aes256.h
  * @author Andrey Izman <izmanw@gmail.com>
- * @copyright Andrey Izman (c) 2018
- * @license MIT
+ * @copyright Andrey Izman (c) 2018-2019
+ * @license LGPL
  */
 
-#ifndef MERVICK_AES256_H
-#define MERVICK_AES256_H
+#ifndef _AES_H_
+#define _AES_H_
 
-#include <stdio.h>
-#include <string.h>
-
-using namespace std;
+#include <string>
+#include <stdint.h>
 
 
 //! AES256 class.
 class AES256
 {
 public:
-    static string encrypt(string text, string passphrase);
-    static string decrypt(string text, string passphrase);
+    /// Encrypt string using passphrase
+    ///
+    /// @param input Input string
+    /// @param len Input length
+    /// @param passphrase Passphrase
+    /// @return Encrypted string
+    static uint8_t* encrypt(const uint8_t *input, const size_t len, const uint8_t *passphrase);
 
-protected:
-    static string encryptFinal(unsigned char *text, int text_len, unsigned char *key, unsigned char *iv);
-    static string decryptFinal(unsigned char *ciphertext, int ciphertext_len, unsigned char *key, unsigned char *iv);
+    /// Encrypt string using passphrase
+    ///
+    /// @param input Input string
+    /// @param passphrase Passphrase
+    /// @return Encrypted string
+    static std::string encrypt(const std::string input, const std::string passphrase);
+
+    /// Decrypt encrypted string using passphrase
+    ///
+    /// @param crypted Input string
+    /// @param passphrase Passphrase
+    /// @return Decrypted string
+    static uint8_t* decrypt(const uint8_t *input, const uint8_t *passphrase);
+
+    /// Decrypt encrypted string using passphrase
+    ///
+    /// @param crypted Input string
+    /// @param passphrase Passphrase
+    /// @return Decrypted string
+    static std::string decrypt(const std::string input, const std::string passphrase);
 };
 
-#endif
+#endif //_AES_H_
