@@ -1,15 +1,26 @@
-#CXX = g++
-#CFLAGS = $(OPENSSL_INCS_LOCATION) -g -Wall -Wextra
-CFLAGS = $(OPENSSL_INCS_LOCATION) -std=gnu++11 -g -Wall -Wno-comment -Wno-parentheses -Wno-unused-variable -Wno-maybe-uninitialized
-LDFLAGS = $(OPENSSL_LIBS_LOCATION) -lssl -lcrypto
+TARGET := a.out
 
-DIR = src
-TARGET = aes256
+SRC_DIR := src
+OBJ_DIR := build
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+LDFLAGS :=
+CPPFLAGS :=
+CXXFLAGS :=
+MKDIR_P ?= mkdir -p
 
-all: $(TARGET)
 
-$(TARGET): $(DIR)/$(TARGET).cpp
-	$(CXX) $(CFLAGS) -o $(TARGET) $< $(LDFLAGS)
+build: clean mkdir $(OBJ_DIR)/$(TARGET)
+
+mkdir:
+	$(MKDIR_P) $(OBJ_DIR)
+
+$(OBJ_DIR)/$(TARGET): $(OBJ_FILES)
+	$(MKDIR_P) $(dir $@)
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	$(RM) $(TARGET) $(DIR)/*.o $(PATH)/*~
+	$(RM) -r $(OBJ_DIR) $(OBJ_DIR)/*.o
