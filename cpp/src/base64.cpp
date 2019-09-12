@@ -1,22 +1,29 @@
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
 #include "base64.h"
 
-static const std::string base64_chars =
+
+using namespace std;
+
+static const string base64_chars =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             "abcdefghijklmnopqrstuvwxyz"
             "0123456789+/";
 
 
-static inline bool is_base64(BYTE c) {
+static inline bool is_base64(uint8_t c) {
     return (isalnum(c) || (c == '+') || (c == '/'));
 }
 
-std::string base64_encode(BYTE const* buf, unsigned int bufLen) {
-    std::string ret;
+string base64_encode(uint8_t const* buf, unsigned int bufLen) {
+    string ret;
     int i = 0;
     int j = 0;
-    BYTE char_array_3[3];
-    BYTE char_array_4[4];
+    uint8_t char_array_3[3];
+    uint8_t char_array_4[4];
 
     while (bufLen--) {
         char_array_3[i++] = *(buf++);
@@ -52,13 +59,13 @@ std::string base64_encode(BYTE const* buf, unsigned int bufLen) {
     return ret;
 }
 
-std::vector<BYTE> base64_decode_vector(std::string const& encoded_string) {
+vector<uint8_t> base64_decode_vector(string const& encoded_string) {
     int in_len = encoded_string.size();
     int i = 0;
     int j = 0;
     int in_ = 0;
-    BYTE char_array_4[4], char_array_3[3];
-    std::vector<BYTE> ret;
+    uint8_t char_array_4[4], char_array_3[3];
+    vector<uint8_t> ret;
 
     while (in_len-- && ( encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
         char_array_4[i++] = encoded_string[in_]; in_++;
@@ -93,9 +100,9 @@ std::vector<BYTE> base64_decode_vector(std::string const& encoded_string) {
     return ret;
 }
 
-std::string base64_decode(std::string const& encoded_string) {
-    std::vector<BYTE> vector = base64_decode_vector(encoded_string);
+string base64_decode(string const& encoded_string) {
+    vector<uint8_t> vector = base64_decode_vector(encoded_string);
     char *buffer = new char[vector.size()];
-    std::copy(vector.begin(), vector.end(), buffer);
-    return std::string(buffer);
+    copy(vector.begin(), vector.end(), buffer);
+    return string(buffer);
 }

@@ -3,10 +3,10 @@
 
 #include <vector>
 #include <string>
-typedef unsigned char BYTE;
+#include <stdint.h>
 
-std::string base64_encode(BYTE const* buf, unsigned int bufLen);
+std::string base64_encode(uint8_t const* buf, unsigned int bufLen);
 std::string base64_decode(std::string const&);
-std::vector<BYTE> base64_decode_vector(std::string const&);
+std::vector<uint8_t> base64_decode_vector(std::string const&);
 
 #endif
