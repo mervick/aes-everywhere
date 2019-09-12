@@ -6,11 +6,26 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 
 ### Usage
 
+Using `string`s:
 ```cpp
-// encryption
-std::string encrypted = AES256::encrypt("TEXT", "PASSWORD"));
+#include <string.h>
+#include "aes256.h"
 
-// decryption
-std::string decrypted = AES256::decrypt("ENCRYPTED", "PASSWORD"));
+std::string text = std::string("TEXT");
+std::string passphrase = std::string("PASSPHRASE");
+
+std::string encrypted = AES256::encrypt(text, passphrase);
+std::string decrypted = AES256::decrypt(encrypted, passphrase);
 ```
 
+Using `uint8_t*`:
+```cpp
+#include <stdint.h>
+#include "aes256.h"
+
+uint8_t *text = (uint8_t *)"TEXT";
+uint8_t *passphrase = (uint8_t *)"PASSPHRASE";
+
+uint8_t *encrypted = AES256::encrypt(text, strlen((char *)text), passphrase));
+uint8_t *decrypted = AES256::decrypt(encrypted, passphrase));
+```
