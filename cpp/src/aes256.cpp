@@ -7,9 +7,8 @@
  * National Institute of Standards and Technology Special Publication 800-38A 2001 ED
  *
  * Aes implementation by Tiny AES contributors (https://github.com/kokke/tiny-AES-c)
- * OpenSSL compatible implementation by Andrey Izman
  *
- * @copyright Tiny AES contributors (c) 2014-2019
+ * @copyright Tiny-AES contributors (c) 2014-2019
  * @copyright Andrey Izman (c) 2018-2019
  *
  * @license LGPL
@@ -116,8 +115,7 @@ static const uint8_t Rcon[11] = {
 // prints string as hex
 static void phex(uint8_t* str, uint8_t len = 16)
 {
-    unsigned char i;
-    for (i = 0; i < len; ++i)
+    for (uint8_t i = 0; i < len; ++i)
         printf("%.2x", str[i]);
     printf("\n");
 }
@@ -440,10 +438,10 @@ static void XorWithIv(uint8_t* buf, const uint8_t* Iv)
     }
 }
 
-static void CBCEncrypt(struct AES_ctx *ctx, uint8_t* buf, uint32_t length)
+static void CBCEncrypt(struct AES_ctx* ctx, uint8_t* buf, uint32_t length)
 {
     uintptr_t i;
-    uint8_t *Iv = ctx->Iv;
+    uint8_t* Iv = ctx->Iv;
 
     for (i = 0; i < length; i += AES_BLOCKLEN)
     {
@@ -480,7 +478,7 @@ static uint8_t xRandom()
 
 static uint8_t* RandomBytes(size_t size)
 {
-    uint8_t *stream = (uint8_t *)malloc(size);
+    uint8_t* stream = (uint8_t*)malloc(size);
 
     for (size_t i = 0; i < size; i++) {
         stream[i] = xRandom() % 254 + 1;
@@ -492,13 +490,13 @@ static uint8_t* RandomBytes(size_t size)
 static uint8_t* Pkcs5Padding(uint8_t* buf, uint32_t len)
 {
     char npad = 16 - len % 16;
-    char *pad = &npad;
+    char* pad = &npad;
 
-    uint8_t *buf2 = (uint8_t *)malloc(len + (uint32_t)npad);
-    strncpy((char *)buf2, (char *)buf, len);
+    uint8_t* buf2 = (uint8_t*)malloc(len + (uint8_t)npad);
+    strncpy((char*)buf2, (char*)buf, len);
 
     for (char i = 0; i < npad; i++) {
-        strncat((char *) buf2, pad, 1);
+        strncat((char*) buf2, pad, 1);
     }
 
     buf2[len] = '\0';
@@ -510,29 +508,29 @@ static void Pkcs5Trimming(uint8_t* buf, size_t len)
     buf[len - buf[len - 1]] = '\0';
 }
 
-static void DeriveKeyIv(struct AES_ctx *ctx, uint8_t *pass, uint8_t *salt)
+static void DeriveKeyIv(struct AES_ctx* ctx, uint8_t* pass, uint8_t* salt)
 {
-    char *dx = (char *)malloc(strlen((char *)pass) + AES_SALTLEN);
+    char* dx = (char*)malloc(strlen((char*)pass) + AES_SALTLEN);
 
-    strcpy((char *)dx, (char *)pass);
-    strcat((char *)dx, (char *)salt);
+    strcpy(dx, (char*)pass);
+    strcat(dx, (char*)salt);
 
-    char *d = (char *)malloc(AES_KEYLEN + AES_BLOCKLEN);
-    char *d_i = (char *)malloc(AES_BLOCKLEN);
+    char* d = (char*)malloc(AES_KEYLEN + AES_BLOCKLEN);
+    char* d_i = (char*)malloc(AES_BLOCKLEN);
 
-    for (size_t i = 0; i < 3; i++) {
-        char *didx = (char *)malloc(strlen(dx) + (i + 1) * 16);
-        strcpy((char *)didx, (char *)d_i);
-        strcat((char *)didx, (char *)dx);
-        strcpy((char *)d_i, MD5(didx).binary().c_str());
-        strncat((char *)d, d_i, 16);
+    for (uint8_t i = 1; i <= 3; i++) {
+        char* didx = (char*)malloc(strlen(dx) + i * 16);
+        strcpy(didx, d_i);
+        strcat(didx, dx);
+        strcpy(d_i, MD5(didx).binary().c_str());
+        strncat(d, d_i, AES_BLOCKLEN);
     }
 
     uint8_t key[AES_KEYLEN];
-    strncpy((char *)key, (char *)d, AES_KEYLEN);
+    strncpy((char*)key, (char*)d, AES_KEYLEN);
 
     KeyExpansion(ctx->RoundKey, key);
-    memcpy((char *)ctx->Iv, (char *)d + AES_KEYLEN, AES_BLOCKLEN);
+    memcpy(ctx->Iv, d + AES_KEYLEN, AES_BLOCKLEN);
 }
 
 /*****************************************************************************/
@@ -545,35 +543,35 @@ static void DeriveKeyIv(struct AES_ctx *ctx, uint8_t *pass, uint8_t *salt)
 /// @param len Input length
 /// @param passphrase Passphrase
 /// @return Encrypted string
-uint8_t* AES256::encrypt(const uint8_t *input, const size_t len, const uint8_t *passphrase)
+uint8_t* AES256::encrypt(const uint8_t* input, const size_t len, const uint8_t* passphrase)
 {
-    uint8_t *crypted = (uint8_t *)malloc(0);
+    uint8_t* crypted = (uint8_t*)malloc(0);
 
     do {
         struct AES_ctx ctx;
 
-        uint8_t *buf = Pkcs5Padding((uint8_t *) input, len);
+        uint8_t* buf = Pkcs5Padding((uint8_t*)input, len);
         size_t padlen = len + AES_BLOCKLEN - len % AES_BLOCKLEN;
-        uint8_t *salt = (uint8_t *)RandomBytes(AES_SALTLEN);
+        uint8_t* salt = (uint8_t*)RandomBytes(AES_SALTLEN);
 
-        DeriveKeyIv(&ctx, (uint8_t *) passphrase, salt);
+        DeriveKeyIv(&ctx, (uint8_t*)passphrase, salt);
         CBCEncrypt(&ctx, buf, padlen);
 
         size_t rlen = padlen + AES_BLOCKLEN;
-        uint8_t *salted = (uint8_t *) malloc(rlen);
+        uint8_t* salted = (uint8_t *) malloc(rlen);
 
-        strncpy((char *) salted, (char *) "Salted__", AES_SALTLEN);
-        strncpy((char *) salted + AES_SALTLEN, (char *) salt, AES_SALTLEN);
-        strncpy((char *) salted + AES_BLOCKLEN, (char *) buf, padlen);
+        strncpy((char*) salted, (char*)"Salted__", AES_SALTLEN);
+        strncpy((char*) salted + AES_SALTLEN, (char*)salt, AES_SALTLEN);
+        strncpy((char*) salted + AES_BLOCKLEN, (char*)buf, padlen);
 
         string encoded = base64_encode(salted, rlen);
 
         size_t cryptedLen = encoded.length() + 1;
-        crypted = (uint8_t *) realloc(crypted, cryptedLen);
-        strncpy((char *) crypted, (char *) encoded.c_str(), cryptedLen);
+        crypted = (uint8_t*) realloc(crypted, cryptedLen);
+        strncpy((char*)crypted, (char*)encoded.c_str(), cryptedLen);
     }
     // with some IV it creates invalid output, so check it before return
-    while (strcmp((char *)input, (char *)decrypt(crypted, passphrase)) != 0);
+    while (strcmp((char*)input, (char*)decrypt(crypted, passphrase)) != 0);
 
     return crypted;
 }
@@ -585,8 +583,9 @@ uint8_t* AES256::encrypt(const uint8_t *input, const size_t len, const uint8_t *
 /// @return Encrypted string
 string AES256::encrypt(const string input, const string passphrase)
 {
-    return string((char *)encrypt((const uint8_t *)input.c_str(),
-                                  (const size_t)input.length(), (const uint8_t *)passphrase.c_str()));
+    return string((char*)encrypt((const uint8_t*)input.c_str(),
+                                 (const size_t)input.length(),
+                                 (const uint8_t*)passphrase.c_str()));
 }
 
 /// Decrypt encrypted string using passphrase
@@ -594,28 +593,28 @@ string AES256::encrypt(const string input, const string passphrase)
 /// @param crypted Input string
 /// @param passphrase Passphrase
 /// @return Decrypted string
-uint8_t* AES256::decrypt(const uint8_t *crypted, const uint8_t *passphrase)
+uint8_t* AES256::decrypt(const uint8_t* crypted, const uint8_t* passphrase)
 {
     struct AES_ctx ctx;
 
-    string b64 = base64_decode(string((char *)crypted));
+    string b64 = base64_decode(string((char*)crypted));
     size_t len = b64.length() + 1;
 
-    uint8_t *decoded = (uint8_t *)b64.c_str();
+    uint8_t* decoded = (uint8_t *)b64.c_str();
     uint8_t salted[AES_SALTLEN];
     uint8_t salt[AES_SALTLEN];
 
-    strncpy((char *)salted, (char *)decoded, AES_SALTLEN);
-    strncpy((char *)salt, (char *)decoded + AES_SALTLEN, AES_SALTLEN);
+    strncpy((char*)salted, (char*)decoded, AES_SALTLEN);
+    strncpy((char*)salt, (char*)decoded + AES_SALTLEN, AES_SALTLEN);
 
-    if (strncmp((char *)salted, (char *)"Salted__", AES_SALTLEN) != 0)
+    if (strncmp((char*)salted, (char*)"Salted__", AES_SALTLEN) != 0)
         return (uint8_t *)"";
 
     size_t outLen = len - AES_BLOCKLEN;
-    uint8_t *buf = (uint8_t *)malloc(outLen);
-    strncpy((char *)buf, (char *)decoded + AES_BLOCKLEN, outLen);
+    uint8_t* buf = (uint8_t *)malloc(outLen);
+    strncpy((char*)buf, (char*)decoded + AES_BLOCKLEN, outLen);
 
-    DeriveKeyIv(&ctx, (uint8_t *)passphrase, salt);
+    DeriveKeyIv(&ctx, (uint8_t*)passphrase, salt);
     CBCDecrypt(&ctx, buf, outLen);
 //    Pkcs5Trimming(buf, outLen);
 
@@ -629,5 +628,6 @@ uint8_t* AES256::decrypt(const uint8_t *crypted, const uint8_t *passphrase)
 /// @return Decrypted string
 string AES256::decrypt(const string input, const string passphrase)
 {
-    return string((char *)decrypt((const uint8_t *)input.c_str(), (const uint8_t *)passphrase.c_str()));
+    return string((char*)decrypt((const uint8_t*)input.c_str(),
+                                 (const uint8_t*)passphrase.c_str()));
 }

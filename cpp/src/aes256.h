@@ -5,14 +5,14 @@
  * @license LGPL
  */
 
-#ifndef _AES_H_
-#define _AES_H_
+#ifndef _AES256_H_
+#define _AES256_H_
 
 #include <string>
 #include <stdint.h>
 
 
-//! AES256 class.
+/// AES256 class.
 class AES256
 {
 public:
@@ -22,7 +22,7 @@ public:
     /// @param len Input length
     /// @param passphrase Passphrase
     /// @return Encrypted string
-    static uint8_t* encrypt(const uint8_t *input, const size_t len, const uint8_t *passphrase);
+    static uint8_t* encrypt(const uint8_t* input, const size_t len, const uint8_t* passphrase);
 
     /// Encrypt string using passphrase
     ///
@@ -36,7 +36,7 @@ public:
     /// @param crypted Input string
     /// @param passphrase Passphrase
     /// @return Decrypted string
-    static uint8_t* decrypt(const uint8_t *input, const uint8_t *passphrase);
+    static uint8_t* decrypt(const uint8_t* input, const uint8_t* passphrase);
 
     /// Decrypt encrypted string using passphrase
     ///
@@ -46,4 +46,4 @@ public:
     static std::string decrypt(const std::string input, const std::string passphrase);
 };
 
-#endif //_AES_H_
+#endif //_AES256_H_
