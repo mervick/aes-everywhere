@@ -13,7 +13,7 @@ pip install aes-everywhere
 ### Usage
 
 ```python
-from AesEverywhere import aes256
+from AesEverywhere.aes256 import aes256
 
 # encryption
 encrypted = aes256().encrypt('TEXT', 'PASSWORD')
