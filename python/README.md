@@ -4,11 +4,16 @@
 
 Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
+### Setup
+```shell
+pip install aes-everywhere
+```
+
 
 ### Usage
 
 ```python
-from aes256 import aes256
+from AesEverywhere import aes256
 
 # encryption
 encrypted = aes256().encrypt('TEXT', 'PASSWORD')
