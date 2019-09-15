@@ -1,8 +1,27 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# ===================================================================
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# ===================================================================
 """
 aes256.py
-AES Everywhere - Cross Language Encryption Library
+AES Everywhere - Cross Language Encryption Library https://github.com/mervick/aes-everywhere
 (c) Andrey Izman <izmanw@gmail.com>
 """
 
@@ -58,7 +77,7 @@ class aes256:
 
     def __pkcs7_padding(self, s):
         """
-        Padding to blocksize according to PKCS #5
+        Padding to blocksize according to PKCS #7
         calculates the number of missing chars to BLOCK_SIZE and pads with
         ord(number of missing chars)
         @see: http://www.di-mgt.com.au/cryptopad.html
@@ -73,7 +92,7 @@ class aes256:
 
     def __pkcs7_trimming(self, s):
         """
-        Trimming according to PKCS #5
+        Trimming according to PKCS #7
         @param s: string Text to unpad
         @type s: string
         @rtype: string
