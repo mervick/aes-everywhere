@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="aes-everywhere",
     packages=['AesEverywhere'],
-    package_dir={'':'src'}
+    package_dir={'':'src'},
     version="1.1.0",
     author="Andrey Izman",
     author_email="izmanw@gmail.com",
