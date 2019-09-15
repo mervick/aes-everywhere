@@ -25,6 +25,8 @@ AES Everywhere - Cross Language Encryption Library https://github.com/mervick/ae
 (c) Andrey Izman 2018-2019 <izmanw@gmail.com>
 """
 
+from aes256 import aes256
+
 __all__       = ['aes256']
 __revision__  = "$Id$"
 __author__    = "Andrey Izman"
