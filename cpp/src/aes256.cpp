@@ -496,7 +496,7 @@ static uint8_t* Pkcs5Padding(uint8_t* buf, uint32_t len)
     strncpy((char*)buf2, (char*)buf, len);
 
     for (char i = 0; i < npad; i++) {
-        strncat((char*) buf2, pad, 1);
+        strncat((char*)buf2, pad, 1);
     }
 
     buf2[len] = '\0';
@@ -558,16 +558,16 @@ uint8_t* AES256::encrypt(const uint8_t* input, const size_t len, const uint8_t* 
         CBCEncrypt(&ctx, buf, padlen);
 
         size_t rlen = padlen + AES_BLOCKLEN;
-        uint8_t* salted = (uint8_t *) malloc(rlen);
+        uint8_t* salted = (uint8_t*)malloc(rlen);
 
-        strncpy((char*) salted, (char*)"Salted__", AES_SALTLEN);
-        strncpy((char*) salted + AES_SALTLEN, (char*)salt, AES_SALTLEN);
-        strncpy((char*) salted + AES_BLOCKLEN, (char*)buf, padlen);
+        strncpy((char*)salted, (char*)"Salted__", AES_SALTLEN);
+        strncpy((char*)salted + AES_SALTLEN, (char*)salt, AES_SALTLEN);
+        strncpy((char*)salted + AES_BLOCKLEN, (char*)buf, padlen);
 
         string encoded = base64_encode(salted, rlen);
 
         size_t cryptedLen = encoded.length() + 1;
-        crypted = (uint8_t*) realloc(crypted, cryptedLen);
+        crypted = (uint8_t*)realloc(crypted, cryptedLen);
         strncpy((char*)crypted, (char*)encoded.c_str(), cryptedLen);
     }
     // with some IV it creates invalid output, so check it before return
@@ -611,14 +611,14 @@ uint8_t* AES256::decrypt(const uint8_t* crypted, const uint8_t* passphrase)
         return (uint8_t *)"";
 
     size_t outLen = len - AES_BLOCKLEN;
-    uint8_t* buf = (uint8_t *)malloc(outLen);
+    uint8_t* buf = (uint8_t*)malloc(outLen);
     strncpy((char*)buf, (char*)decoded + AES_BLOCKLEN, outLen);
 
     DeriveKeyIv(&ctx, (uint8_t*)passphrase, salt);
     CBCDecrypt(&ctx, buf, outLen);
 //    Pkcs5Trimming(buf, outLen);
 
-    return (uint8_t *)buf;
+    return (uint8_t*)buf;
 }
 
 /// Decrypt encrypted string using passphrase
