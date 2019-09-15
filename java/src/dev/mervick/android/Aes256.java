@@ -60,7 +60,7 @@ class Aes256
         final byte[] iv = Arrays.copyOfRange(keyAndIv, 32, 48);
         final SecretKeySpec key = new SecretKeySpec(keyValue, "AES");
 
-        final Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        final Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
         byte[] data = cipher.doFinal(inBytes);
         data = array_concat(array_concat(SALTED_MAGIC, salt), data);
@@ -103,7 +103,7 @@ class Aes256
 
         final byte[] iv = Arrays.copyOfRange(keyAndIv, 32, 48);
 
-        final Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        final Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
         cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
         final byte[] clear = cipher.doFinal(inBytes, 16, inBytes.length - 16);
         return new String(clear, UTF_8);

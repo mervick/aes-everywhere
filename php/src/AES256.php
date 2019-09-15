@@ -35,6 +35,7 @@ class AES256
         $key = substr($salted, 0, 32);
         $iv = substr($salted, 32, 16);
 
+        // encrypt with PKCS7 padding
         return base64_encode('Salted__' . $salt . openssl_encrypt($text . '', 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv));
     }
 

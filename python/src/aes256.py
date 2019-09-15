@@ -36,7 +36,7 @@ class aes256:
         salt = Random.new().read(8)
         key, iv = self.__derive_key_and_iv(passphrase, salt)
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        return base64.b64encode(b'Salted__' + salt + cipher.encrypt(self.__pkcs5_padding(raw)))
+        return base64.b64encode(b'Salted__' + salt + cipher.encrypt(self.__pkcs7_padding(raw)))
 
     def decrypt(self, enc, passphrase):
         """
@@ -54,9 +54,9 @@ class aes256:
         salt = ct[8:16]
         key, iv = self.__derive_key_and_iv(passphrase, salt)
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        return self.__pkcs5_trimming(cipher.decrypt(ct[16:]))
+        return self.__pkcs7_trimming(cipher.decrypt(ct[16:]))
 
-    def __pkcs5_padding(self, s):
+    def __pkcs7_padding(self, s):
         """
         Padding to blocksize according to PKCS #5
         calculates the number of missing chars to BLOCK_SIZE and pads with
@@ -71,7 +71,7 @@ class aes256:
         s = s + (self.BLOCK_SIZE - s_len % self.BLOCK_SIZE) * chr(self.BLOCK_SIZE - s_len % self.BLOCK_SIZE)
         return s if py2 else bytes(s, 'utf-8')
 
-    def __pkcs5_trimming(self, s):
+    def __pkcs7_trimming(self, s):
         """
         Trimming according to PKCS #5
         @param s: string Text to unpad

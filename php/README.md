@@ -1,6 +1,6 @@
 # AES Everywhere - Cross Language Encryption Library
 
-Cipher: AES/256/CBC/PKCS5Padding with random generated salt
+Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
 ## PHP implementation
 

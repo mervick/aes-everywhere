@@ -1,6 +1,6 @@
 // aes256.go
 // Author Andrey Izman <izmanw@gmail.com>
-// Copyright 2018 Andrey Izman
+// Copyright 2018 - 2019 Andrey Izman
 // License MIT
 
 package aes256
@@ -29,7 +29,7 @@ func Encrypt(text string, passphrase string) (string) {
 		panic(err)
 	}
 
-	pad := __PKCS5Padding([]byte(text), block.BlockSize())
+	pad := __PKCS7Padding([]byte(text), block.BlockSize())
 	ecb := cipher.NewCBCEncrypter(block, []byte(iv))
 	encrypted := make([]byte, len(pad))
 	ecb.CryptBlocks(encrypted, pad)
@@ -57,16 +57,16 @@ func Decrypt(encrypted string, passphrase string) (string) {
 	dst := make([]byte, len(ct))
 	cbc.CryptBlocks(dst, ct)
 
-	return string(__PKCS5Trimming(dst))
+	return string(__PKCS7Trimming(dst))
 }
 
-func __PKCS5Padding(ciphertext []byte, blockSize int) []byte {
+func __PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
-func __PKCS5Trimming(encrypt []byte) []byte {
+func __PKCS7Trimming(encrypt []byte) []byte {
 	padding := encrypt[len(encrypt)-1]
 	return encrypt[:len(encrypt)-int(padding)]
 }

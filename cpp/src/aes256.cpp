@@ -487,7 +487,7 @@ static uint8_t* RandomBytes(size_t size)
     return stream;
 }
 
-static uint8_t* Pkcs5Padding(uint8_t* buf, uint32_t len)
+static uint8_t* Pkcs7Padding(uint8_t* buf, uint32_t len)
 {
     char npad = 16 - len % 16;
     char* pad = &npad;
@@ -503,7 +503,7 @@ static uint8_t* Pkcs5Padding(uint8_t* buf, uint32_t len)
     return buf2;
 }
 
-static void Pkcs5Trimming(uint8_t* buf, size_t len)
+static void Pkcs7Trimming(uint8_t* buf, size_t len)
 {
     buf[len - buf[len - 1]] = '\0';
 }
@@ -550,7 +550,7 @@ uint8_t* AES256::encrypt(const uint8_t* input, const size_t len, const uint8_t* 
     do {
         struct AES_ctx ctx;
 
-        uint8_t* buf = Pkcs5Padding((uint8_t*)input, len);
+        uint8_t* buf = Pkcs7Padding((uint8_t*)input, len);
         size_t padlen = len + AES_BLOCKLEN - len % AES_BLOCKLEN;
         uint8_t* salt = (uint8_t*)RandomBytes(AES_SALTLEN);
 
@@ -616,7 +616,7 @@ uint8_t* AES256::decrypt(const uint8_t* crypted, const uint8_t* passphrase)
 
     DeriveKeyIv(&ctx, (uint8_t*)passphrase, salt);
     CBCDecrypt(&ctx, buf, outLen);
-//    Pkcs5Trimming(buf, outLen);
+//    Pkcs7Trimming(buf, outLen);
 
     return (uint8_t*)buf;
 }

@@ -2,7 +2,7 @@
 
 ## C# implementation
 
-Cipher: AES/256/CBC/PKCS5Padding with random generated salt
+Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
 
 ### Usage
@@ -13,9 +13,9 @@ using AesEverywhere;
 AES256 aes = new AES256();
 
 // encryption
-string ct = aes.Encrypt("TEXT", "PASSWORD");
+string crypted = aes.Encrypt("TEXT", "PASSWORD");
 
 // decryption
-string dec = aes.Decrypt("ENCRYPTED", "PASSWORD");
+string decrypted = aes.Decrypt(crypted, "PASSWORD");
 ```
 

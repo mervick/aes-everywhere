@@ -2,8 +2,8 @@
 
 AES Everywhere is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
 
-It implements OpenSSL compatible cryptography.  
-Cipher: AES/256/CBC/PKCS5Padding with random generated salt
+It implements OpenSSL compatible cryptography.
+Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
 
 ## Implementations
@@ -28,4 +28,3 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
  + scala
  + clojure
  + lisp
- 
