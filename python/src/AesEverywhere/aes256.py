@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
+# aes256.py
+# This file is part of AES-everywhere project (https://github.com/mervick/aes-everywhere)
 #
-# ===================================================================
+# This is an implementation of the AES algorithm, specifically CBC mode,
+# with 256 bits key length and PKCS7 padding.
+#
+# Copyright Andrey Izman (c) 2018-2019 <izmanw@gmail.com>
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -18,12 +24,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-# ===================================================================
-"""
-aes256.py
-AES Everywhere - Cross Language Encryption Library https://github.com/mervick/aes-everywhere
-(c) Andrey Izman <izmanw@gmail.com>
-"""
+
 
 import sys
 import base64
@@ -111,8 +112,9 @@ class aes256:
         @rtype: string
         """
         d = d_i = b''
+        enc_pass = password.encode('utf-8')
         while len(d) < self.KEY_LEN + self.IV_LEN:
-            d_i = md5(d_i + password.encode('utf-8') + salt).digest()
+            d_i = md5(d_i + enc_pass + salt).digest()
             d += d_i
         return d[:self.KEY_LEN], d[self.KEY_LEN:self.KEY_LEN + self.IV_LEN]
 
