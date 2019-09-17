@@ -16,7 +16,7 @@ It implements OpenSSL compatible cryptography with random generated salt
  + [JavaScript](https://github.com/mervick/aes-everywhere/tree/master/javascript)
  + [PHP](https://github.com/mervick/aes-everywhere/tree/master/php)
  + [Python](https://github.com/mervick/aes-everywhere/tree/master/python)
- + [Swift](https://github.com/mervick/aes-everywhere/tree/master/swift)
+ + [Swift](https://github.com/mervick/aes-everywhere-swift)
 
 
 ### TODO
