@@ -6,3 +6,6 @@ npm-debug.log
 ignore
 *.pyc
 gs-maven.iml
+aes-everywhere.sln
+*.exe
+swift-back
