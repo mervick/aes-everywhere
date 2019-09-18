@@ -11,7 +11,7 @@ It implements OpenSSL compatible cryptography with random generated salt
 ### Installation
 
 ```shell
-pip install aes-everywhere
+gem install aes-everywhere
 ```
 
 ### Usage
