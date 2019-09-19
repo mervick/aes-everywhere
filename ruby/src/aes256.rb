@@ -59,7 +59,7 @@ class AES256
 
   def self.derive_key_and_iv(passphrase, salt)
     dx = di = ""
-    enc_pass = passphrase.encode("iso-8859-1")
+    enc_pass = passphrase.bytes.pack('c*')
 
     for _ in 1...4
       di = Digest::MD5.digest(di + enc_pass + salt)
