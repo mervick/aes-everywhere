@@ -31,6 +31,12 @@ require "base64"
 
 
 class AES256
+  ##
+  # Encrypt text with the passphrase
+  #
+  # @param [String] input
+  # @param [String] passphrase
+  # @return [String]
   def self.encrypt(input, passphrase)
     salt = OpenSSL::Random.random_bytes(8)
     cipher = OpenSSL::Cipher::AES256.new(:CBC)
@@ -40,6 +46,12 @@ class AES256
     Base64.strict_encode64("Salted__" + salt + crypted)
   end
 
+  ##
+  # Decrypt encrypted text with the passphrase
+  #
+  # @param [String] crypted
+  # @param [String] passphrase
+  # @return [String]
   def self.decrypt(crypted, passphrase)
     data = Base64.strict_decode64(crypted)
     salted = data[0..7]
@@ -57,6 +69,12 @@ class AES256
 
   private
 
+  ##
+  # Derive key and iv
+  #
+  # @param [String] passphrase
+  # @param [String] salt
+  # @return [String, String]
   def self.derive_key_and_iv(passphrase, salt)
     dx = di = ""
     enc_pass = passphrase.bytes.pack('c*')
