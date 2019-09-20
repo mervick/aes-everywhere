@@ -20,10 +20,10 @@ pip install aes-everywhere
 from AesEverywhere.aes256 import aes256
 
 # encryption
-encrypted = aes256().encrypt('TEXT', 'PASSWORD')
+encrypted = aes256.encrypt('TEXT', 'PASSWORD')
 print(encrypted)
 
 # decryption
-print(aes256().decrypt(encrypted, 'PASSWORD'))
+print(aes256.decrypt(encrypted, 'PASSWORD'))
 ```
 
