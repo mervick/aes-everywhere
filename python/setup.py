@@ -7,7 +7,7 @@ setuptools.setup(
     name="aes-everywhere",
     packages=['AesEverywhere'],
     package_dir={'':'src'},
-    version="1.1.3",
+    version="1.2.5",
     author="Andrey Izman",
     author_email="izmanw@gmail.com",
     description="AES Everywhere - Cross Language Encryption Library",
@@ -30,4 +30,5 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/mervick/aes-everywhere/issues",
         "Source Code": "https://github.com/mervick/aes-everywhere",
     },
+    test_suite="src/tests"
 )
