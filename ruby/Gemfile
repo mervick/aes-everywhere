@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+gem "openssl"
+gem "base64"
+gem 'digest', :git => 'https://github.com/hashview/digest'
