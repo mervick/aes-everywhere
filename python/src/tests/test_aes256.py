@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import base64
-from hashlib import md5
-from Crypto import Random
-from Crypto.Cipher import AES
-# from AesEverywhere import aes256
-# from AesEverywhere.aes256 import aes256
+from AesEverywhere.aes256 import aes256
 
 try:
     if sys.version_info < (2, 7):
