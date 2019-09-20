@@ -1,4 +1,4 @@
-# aes256.rb
+# aes-everywhere.rb
 # This file is part of AES-everywhere project (https://github.com/mervick/aes-everywhere)
 #
 # This is an implementation of the AES algorithm, specifically CBC mode,
