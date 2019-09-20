@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './src/aes256.rb'
+require './lib/aes-everywhere.rb'
 
 
 class AES256Test < Minitest::Test
