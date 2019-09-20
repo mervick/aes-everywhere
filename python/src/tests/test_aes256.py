@@ -14,7 +14,7 @@ except ImportError:
 
 py2 = sys.version_info[0] == 2
 
-FAIL = "Invalid decrypt"
+FAIL = "Invalid decryption"
 
 def u(str):
     return str.decode('utf-8').encode('utf-8') if py2 else str.encode('utf-8')
