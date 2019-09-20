@@ -14,6 +14,12 @@ It implements OpenSSL compatible cryptography with random generated salt
 gem install aes-everywhere
 ```
 
+or add in your `Gemfile`
+```ruby
+gem 'aes-everywhere'
+```
+
+
 ### Usage
 
 ```ruby
