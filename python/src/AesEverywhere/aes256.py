@@ -47,6 +47,7 @@ class aes256:
     KEY_LEN = 32
     IV_LEN = 16
 
+    @staticmethod
     def encrypt(raw, passphrase):
         """
         Encrypt text with the passphrase
@@ -61,6 +62,7 @@ class aes256:
         cipher = AES.new(key, AES.MODE_CBC, iv)
         return base64.b64encode(b'Salted__' + salt + cipher.encrypt(aes256.__pkcs7_padding(raw)))
 
+    @staticmethod
     def decrypt(enc, passphrase):
         """
         Decrypt encrypted text with the passphrase
@@ -79,6 +81,7 @@ class aes256:
         cipher = AES.new(key, AES.MODE_CBC, iv)
         return aes256.__pkcs7_trimming(cipher.decrypt(ct[16:]))
 
+    @staticmethod
     def __pkcs7_padding(s):
         """
         Padding to blocksize according to PKCS #7
@@ -93,6 +96,7 @@ class aes256:
         s = s + (aes256.BLOCK_SIZE - s_len % aes256.BLOCK_SIZE) * chr(aes256.BLOCK_SIZE - s_len % aes256.BLOCK_SIZE)
         return s if py2 else bytes(s, 'utf-8')
 
+    @staticmethod
     def __pkcs7_trimming(s):
         """
         Trimming according to PKCS #7
@@ -104,6 +108,7 @@ class aes256:
             return s[0:-ord(s[-1])]
         return s[0:-s[-1]]
 
+    @staticmethod
     def __derive_key_and_iv(password, salt):
         """
         Derive key and iv
