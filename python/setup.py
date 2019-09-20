@@ -30,5 +30,5 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/mervick/aes-everywhere/issues",
         "Source Code": "https://github.com/mervick/aes-everywhere",
     },
-    test_suite="src/tests"
+    test_suite="src/tests/test_aes256.py"
 )
