@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from AesEverywhere.aes256 import aes256
+from AesEverywhere import aes256
 
 try:
     if sys.version_info < (2, 7):
@@ -13,7 +13,6 @@ except ImportError:
 
 
 py2 = sys.version_info[0] == 2
-
 FAIL = "Invalid decryption"
 
 def u(str):

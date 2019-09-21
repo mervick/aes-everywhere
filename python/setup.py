@@ -7,7 +7,7 @@ setuptools.setup(
     name="aes-everywhere",
     packages=['AesEverywhere'],
     package_dir={'':'src'},
-    version="1.2.7",
+    version="1.2.8",
     author="Andrey Izman",
     author_email="izmanw@gmail.com",
     description="AES Everywhere - Cross Language Encryption Library",
