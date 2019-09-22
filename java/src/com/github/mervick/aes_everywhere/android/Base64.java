@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package dev.mervick.android;
+package com.github.mervick.aes_everywhere.android;
 
 import java.io.UnsupportedEncodingException;
 
@@ -24,7 +23,7 @@ import java.io.UnsupportedEncodingException;
  * href="http://www.ietf.org/rfc/rfc2045.txt">2045</a> and <a
  * href="http://www.ietf.org/rfc/rfc3548.txt">3548</a>.
  */
-public class Base64 {
+class Base64 {
     /**
      * Default values for encoder/decoder flags.
      */
