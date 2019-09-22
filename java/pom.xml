@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>dev.mervick</groupId>
+  <groupId>com.github.mervick.aes_everywhere</groupId>
   <artifactId>aes-everywhere</artifactId>
   <version>1.2.7</version>
   <packaging>jar</packaging>
@@ -29,10 +29,6 @@
 
   <dependencies>
     <dependency>
-      <!--<groupId>junit</groupId>-->
-      <!--<artifactId>junit</artifactId>-->
-      <!--<version>4.11</version>-->
-      <!--<scope>test</scope>-->
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>5.3.1</version>
