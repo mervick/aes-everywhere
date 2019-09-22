@@ -26,140 +26,53 @@
 
 package com.github.mervick.aes_everywhere.android;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.util.Arrays;
-
-import static java.nio.charset.StandardCharsets.US_ASCII;
+import com.github.mervick.aes_everywhere.AbstractAes256;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 
-public class Aes256
+public class Aes256 extends AbstractAes256
 {
-    private static final int BASE64FLAGS = Base64.NO_WRAP;
-    private static final byte[] SALTED = "Salted__".getBytes(US_ASCII);
-
     /**
      * Encrypt text with the passphrase
-     *
      * @param input Input text to encrypt
      * @param passphrase The passphrase
      * @return A base64 encoded string containing the encrypted data
      * @throws Exception Throws exceptions
      */
-    public static String encrypt(String input, String passphrase) throws Exception
-    {
-        return Base64.encodeToString(_encrypt(input.getBytes(UTF_8), passphrase.getBytes(UTF_8)), BASE64FLAGS);
+    public static String encrypt(String input, String passphrase) throws Exception {
+        return Base64.encodeToString(_encrypt(input.getBytes(UTF_8), passphrase.getBytes(UTF_8)), Base64.NO_WRAP);
     }
 
     /**
      * Encrypt text in bytes with the passphrase
-     *
      * @param input Input data in bytes to encrypt
      * @param passphrase The passphrase in bytes
      * @return A base64 encoded bytes containing the encrypted data
      * @throws Exception Throws exceptions
      */
-    public static byte[] encrypt(byte[] input, byte[] passphrase) throws Exception
-    {
-        return Base64.encode(_encrypt(input, passphrase), BASE64FLAGS);
-    }
-
-    /**
-     * Internal encrypt function
-     *
-     * @param input
-     * @param passphrase
-     * @return
-     * @throws Exception
-     */
-    private static byte[] _encrypt(byte[] input, byte[] passphrase) throws Exception
-    {
-        byte[] salt = (new SecureRandom()).generateSeed(8);
-        Object[] keyIv = deriveKeyAndIv(passphrase, salt);
-
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec((byte[])keyIv[0], "AES"), new IvParameterSpec((byte[])keyIv[1]));
-
-        byte[] enc = cipher.doFinal(input);
-        return concat(concat(SALTED, salt), enc);
+    public static byte[] encrypt(byte[] input, byte[] passphrase) throws Exception {
+        return Base64.encode(_encrypt(input, passphrase), Base64.NO_WRAP);
     }
 
     /**
      * Decrypt encrypted base64 encoded text in bytes
-     *
      * @param crypted Text in bytes to decrypt
      * @param passphrase The passphrase in bytes
      * @return Decrypted data in bytes
      * @throws Exception Throws exceptions
      */
-    public static String decrypt(String crypted, String passphrase) throws Exception
-    {
-        return new String(decrypt(crypted.getBytes(), passphrase.getBytes(UTF_8)), UTF_8);
+    public static String decrypt(String crypted, String passphrase) throws Exception {
+        return new String(_decrypt(Base64.decode(crypted, Base64.NO_WRAP), passphrase.getBytes(UTF_8)), UTF_8);
     }
 
     /**
      * Decrypt encrypted base64 encoded text in bytes
-     *
      * @param crypted Text in bytes to decrypt
      * @param passphrase The passphrase in bytes
      * @return Decrypted data in bytes
      * @throws Exception Throws exceptions
      */
-    public static byte[] decrypt(byte[] crypted, byte[] passphrase) throws Exception
-    {
-        byte[] data = Base64.decode(crypted, BASE64FLAGS);
-        byte[] salt = Arrays.copyOfRange(data, 8, 16);
-
-        if (!Arrays.equals(Arrays.copyOfRange(data, 0, 8), SALTED)) {
-            throw new IllegalArgumentException("Invalid crypted data");
-        }
-
-        Object[] keyIv = deriveKeyAndIv(passphrase, salt);
-
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec((byte[])keyIv[0], "AES"), new IvParameterSpec((byte[])keyIv[1]));
-        return cipher.doFinal(data, 16, data.length - 16);
-    }
-
-    /**
-     * Derive key and iv
-     *
-     * @param passphrase Passphrase
-     * @param salt Salt
-     * @return Array of key and iv
-     * @throws Exception Throws exceptions
-     */
-    private static Object[] deriveKeyAndIv(byte[] passphrase, byte[] salt) throws Exception
-    {
-        final MessageDigest md5 = MessageDigest.getInstance("MD5");
-        final byte[] passSalt = concat(passphrase, salt);
-        byte[] dx = new byte[0];
-        byte[] di = new byte[0];
-
-        for (int i = 0; i < 3; i++) {
-            di = md5.digest(concat(di, passSalt));
-            dx = concat(dx, di);
-        }
-
-        return new Object[]{Arrays.copyOfRange(dx, 0, 32), Arrays.copyOfRange(dx, 32, 48)};
-    }
-
-    /**
-     * Concatenate bytes
-     *
-     * @param a
-     * @param b
-     * @return Concatenated bytes
-     */
-    private static byte[] concat(byte[] a, byte[] b)
-    {
-        byte[] c = new byte[a.length + b.length];
-        System.arraycopy(a, 0, c, 0, a.length);
-        System.arraycopy(b, 0, c, a.length, b.length);
-        return c;
+    public static byte[] decrypt(byte[] crypted, byte[] passphrase) throws Exception {
+        return _decrypt(Base64.decode(crypted, Base64.NO_WRAP), passphrase);
     }
 }
