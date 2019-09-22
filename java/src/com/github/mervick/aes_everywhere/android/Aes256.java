@@ -162,18 +162,4 @@ public class Aes256
         System.arraycopy(b, 0, c, a.length, b.length);
         return c;
     }
-
-    /**
-     * Main function for tests
-     * @param args Arguments
-     * @throws Exception Throws exceptions
-     */
-    public static void main(String[] args) throws Exception
-    {
-        String encrypted = Aes256.encrypt("Android Enc", "PASSWORD");
-        System.out.println(encrypted);
-
-        String decrypted = Aes256.decrypt(encrypted, "PASSWORD");
-        System.out.println(decrypted);
-    }
 }
