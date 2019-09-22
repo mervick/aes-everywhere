@@ -1,39 +1,67 @@
 # AES Everywhere - Cross Language Encryption Library
 
-## Java implementation
+[AES Everywhere]() is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
 
-Cipher: AES/256/CBC/PKCS7Padding with random generated salt
+This is an implementation of the AES algorithm, specifically CBC mode, with 256 bits key length and PKCS7 padding.
+It implements OpenSSL compatible cryptography with random generated salt
+
+
+## [Java](https://www.java.com) implementation
+
+### Installation
+
+Via [maven](https://maven.apache.org/):  
+Add in you `pom.xml`
+
+```xml
+  <dependencies>
+    <dependency>
+      <groupId>com.github.mervick.aes_everywhere</groupId>
+      <artifactId>aes-everywhere</artifactId>
+      <version>1.2.7</version>
+    </dependency>
+  </dependencies>
+```
+
+### Import Aes256 in your project
+
+
+**Java &gt;= 8**
+
+```java
+import com.github.mervick.aes_everywhere.Aes256;
+
+```
+
+**Android with API level &lt; 26 or Java &lt; 8**
+
+```java
+import com.github.mervick.aes_everywhere.android.Aes256;
+```
 
 ### Usage
 
 ```java
-import dev.mervick.Aes256;
+String text = "TEXT";
+String pass = "PASSWORD";
 
-// [...]
+byte[] text_bytes = text.getBytes("UTF-8");
+byte[] pass_bytes = pass.getBytes("UTF-8");
 
-// encryption
-String encrypted = Aes256.encrypt("TEXT", "PASSWORD");
+// strings encryption
+String encrypted = Aes256.encrypt(text, pass);
 System.out.println(encrypted);
 
-// decryption
-String decrypted = Aes256.decrypt(encrypted, "PASSWORD");
+// bytes encryption
+byte[] encrypted_bytes = Aes256.encrypt(text_bytes, pass_bytes);
+System.out.println(encrypted_bytes);
+
+// strings decryption
+String decrypted = Aes256.decrypt(encrypted, pass);
 System.out.println(decrypted);
 
-```
-
-#### Android with API level &lt; 26:
-
-```java
-import dev.mervick.android.Aes256;
-
-// [...]
-
-// encryption
-String encrypted = Aes256.encrypt("TEXT", "PASSWORD");
-System.out.println(encrypted);
-
-// decryption
-String decrypted = Aes256.decrypt(encrypted, "PASSWORD");
+// bytes decryption
+byte[] decrypted_bytes = Aes256.decrypt(encrypted_bytes, pass_bytes);
 System.out.println(decrypted);
 ```
 
@@ -41,4 +69,4 @@ System.out.println(decrypted);
 
 [java.security.InvalidKeyException: Illegal key size](https://github.com/mervick/aes-everywhere/issues/5)
 
-This exception is thrown because of a restriction imposed by default JDK. On a default JDK installation, AES is limited to 128 bit key size.
+This exception throws because of a restriction imposed by the default JDK. On the default JDK installation AES is limited to 128 bit key size.
