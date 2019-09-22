@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.github.mervick.aes_everywhere.android;
+package com.github.mervick.aes_everywhere.legacy;
 
 import com.github.mervick.aes_everywhere.AbstractAes256;
 import static java.nio.charset.StandardCharsets.UTF_8;

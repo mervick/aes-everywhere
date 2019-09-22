@@ -1,4 +1,4 @@
-package com.github.mervick.aes_everywhere.android;
+package com.github.mervick.aes_everywhere.legacy;
 
 import com.github.mervick.aes_everywhere.Aes256Test;
 

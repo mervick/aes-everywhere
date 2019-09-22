@@ -11,16 +11,16 @@ It implements OpenSSL compatible cryptography with random generated salt
 ### Installation
 
 Via [maven](https://maven.apache.org/):  
-Add in you `pom.xml`
+Add in dependencies of your `pom.xml`
 
 ```xml
-  <dependencies>
-    <dependency>
-      <groupId>com.github.mervick.aes_everywhere</groupId>
-      <artifactId>aes-everywhere</artifactId>
-      <version>1.2.7</version>
-    </dependency>
-  </dependencies>
+<dependencies>
+  <dependency>
+    <groupId>com.github.mervick.aes_everywhere</groupId>
+    <artifactId>aes-everywhere</artifactId>
+    <version>1.2.7</version>
+  </dependency>
+</dependencies>
 ```
 
 ### Import Aes256 in your project
@@ -33,10 +33,11 @@ import com.github.mervick.aes_everywhere.Aes256;
 
 ```
 
-**Android with API level &lt; 26 or Java &lt; 8**
+**Android with API level &lt; 26 or Java &lt; 8**  
+(also in case if you get error about java.util.Base64)
 
 ```java
-import com.github.mervick.aes_everywhere.android.Aes256;
+import com.github.mervick.aes_everywhere.legacy.Aes256;
 ```
 
 ### Usage
@@ -62,7 +63,7 @@ System.out.println(decrypted);
 
 // bytes decryption
 byte[] decrypted_bytes = Aes256.decrypt(encrypted_bytes, pass_bytes);
-System.out.println(decrypted);
+System.out.println(decrypted_bytes);
 ```
 
 ## Known issues
