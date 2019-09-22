@@ -1,103 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>dev.mervick</groupId>
-    <artifactId>gs-maven</artifactId>
-    <packaging>jar</packaging>
-    <version>0.1.0</version>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <properties>
-        <src.dir>src</src.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.src.directory>src</project.src.directory>
-        <project.build.directory>target</project.build.directory>
-    </properties>
+  <groupId>dev.mervick</groupId>
+  <artifactId>aes-everywhere</artifactId>
+  <version>1.2.7</version>
+  <packaging>jar</packaging>
 
-    <build>
-        <outputDirectory>${project.build.directory}/myclasses</outputDirectory>
-        <sourceDirectory>${src.dir}</sourceDirectory>
+  <name>Aes-Everywhere</name>
+  <description>AES Everywhere is the Cross Language Encryption Library. Java implementation</description>
+  <url>https://github.com/mervick/aes-everywhere</url>
 
-        <plugins>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>createClassesDir</id>
-                        <phase>process-resources</phase>
-                        <configuration>
-                            <tasks>
-                                <mkdir dir="${project.build.directory}/myclasses" />
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://github.com/mervick/aes-everywhere/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <phase>goal</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>dev.mervick.Aes256</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>junit</groupId>-->
-                        <!--<artifactId>junit</artifactId>-->
-                        <!--<version>4.12</version>-->
-                        <!--<scope>test</scope>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
-            </plugin>
+  <dependencies>
+    <dependency>
+      <!--<groupId>junit</groupId>-->
+      <!--<artifactId>junit</artifactId>-->
+      <!--<version>4.11</version>-->
+      <!--<scope>test</scope>-->
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.3.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <!--<configuration>-->
-                            <!--<outputdirectory>${project.build.directory}/lib</outputdirectory>-->
-                            <!--<overwritereleases>false</overwritereleases>-->
-                            <!--<overwritesnapshots>false</overwritesnapshots>-->
-                            <!--<overwriteifnewer>true</overwriteifnewer>-->
-                        <!--</configuration>-->
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>dev.mervick.Aes256</mainClass>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>tests</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
