@@ -36,7 +36,6 @@ ${b}NAME${c}
 ${b}SYNOPSIS${c}
     ${b}aes256${c} [encrypt|decrypt] [${b}-p${c} passphrase|${b}--passphrase${c}=passphrase]
     [${b}-i${c} input_file|${b}--in${c}=input_file] [${b}-o${c} output_file|${b}--out${c}=output_file]
-    [${b}-f${c} format|${b}--format${c}=format]
 
 ${b}DESCRIPTION${c}
     ${b}aes256${c} is part of cross-language-encryption library and provide function
@@ -56,10 +55,6 @@ ${b}DESCRIPTION${c}
     ${b}--out=${c}output_file
         Specifies output file where will be stored result
 
-    ${b}-f${c} format
-    ${b}--format=${c}format
-        Specifies the format, can be ${b}concat${c} or ${b}json${c}
-
     ${b}--help${c}
         Show this help
 
@@ -71,7 +66,6 @@ EOF
 usage="$(cat << EOF
 usage: aes256 encrypt|decrypt [-p passphrase|--passphrase=passphrase]
        [-i input_file|--in=input_file] [-o output_file|--out=output_file]
-       [-f format|--format=format]
 EOF
 )"
 
@@ -85,7 +79,6 @@ if [[ $# -eq 0 ]]; then
 fi
 
 operation="encrypt"
-format="concat"
 
 if [[ $1 == "decrypt" ]]; then
     operation="decrypt"
@@ -138,21 +131,6 @@ while [[ $# -gt 0 ]]; do
             out="${1#--out=*}"
         ;;
 
-        -f)
-            shift
-            if [[ $# -gt 0 ]]; then
-                format="$1"
-            else
-                (1>&2 echo "Require format")
-                exit 4
-            fi
-        ;;
-
-        --format=*)
-            format="${1#--format=*}"
-        ;;
-
-
         --help)
             echo -e "$help"
             exit 0
@@ -166,11 +144,6 @@ while [[ $# -gt 0 ]]; do
     esac
     shift
 done
-
-if [[ "$format" != "json" && "$format" != "concat" ]]; then
-    (1>&2 echo "Unsupported format '$format'")
-    exit 9
-fi
 
 STDIN=""
 if [[ "$in" == "" ]]; then
