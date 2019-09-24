@@ -1,3 +1,7 @@
 [submodule "swift"]
 	path = swift
 	url = https://github.com/mervick/aes-everywhere-swift
+
+[submodule "java"]
+	path = java
+	url = https://github.com/mervick/aes-everywhere-java
