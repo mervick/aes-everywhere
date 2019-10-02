@@ -19,13 +19,3 @@ It implements OpenSSL compatible cryptography with random generated salt
  + [Ruby](https://github.com/mervick/aes-everywhere/tree/master/ruby)
  + [Swift](https://github.com/mervick/aes-everywhere-swift)
 
-
-### TODO
-
- + Kotlin
- + Objective-C
- + Perl
- + Dart
- + Scala
- + Clojure
- + Lisp
