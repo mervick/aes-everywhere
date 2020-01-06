@@ -8,6 +8,8 @@ It implements OpenSSL compatible cryptography with random generated salt
 
 ## [Python](https://www.python.org/) implementation
 
+Python versions >= 2.7, < 3.8
+
 ### Installation
 ```shell
 pip install aes-everywhere
@@ -27,3 +29,7 @@ print(encrypted)
 print(aes256.decrypt(encrypted, 'PASSWORD'))
 ```
 
+### Known bugs
+
+AttributeError: module 'time' has no attribute 'clock' with python 3.8  
+ref https://github.com/mervick/aes-everywhere/issues/21
