@@ -2,6 +2,8 @@
 
 ## C++ implementation
 
+### Attention. Work is in progress, the current implementation is buggy and requires a complete rewrite. Don't use it
+
 Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
 ### Usage
