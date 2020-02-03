@@ -15,6 +15,7 @@ It implements OpenSSL compatible cryptography with random generated salt
  + [GoLang](https://github.com/mervick/aes-everywhere/tree/master/go)
  + [Java](https://github.com/mervick/aes-everywhere-java)
  + [JavaScript](https://github.com/mervick/aes-everywhere/tree/master/javascript)
+ + [Lua](https://github.com/mervick/aes-everywhere/tree/master/lua)
  + [PHP](https://github.com/mervick/aes-everywhere/tree/master/php)
  + [Python](https://github.com/mervick/aes-everywhere/tree/master/python)
  + [Ruby](https://github.com/mervick/aes-everywhere/tree/master/ruby)
