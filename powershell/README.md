@@ -1,6 +1,6 @@
 # AES Everywhere - Cross Language Encryption Library
 
-## Bash/shell wrapper
+## Powershell
 
 Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
