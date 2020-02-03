@@ -36,9 +36,6 @@ param (
     [switch]$h
 )
 
-
-# Write-Host "NAME" -Color Red
-
 $small_help = "usage: aes256 [-m encrypt (default)|decrypt] [-t text] [-p passphrase]
 `t[-i input_file] [-o output_file]"
 
