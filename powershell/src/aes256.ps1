@@ -39,10 +39,10 @@ param (
 
 # Write-Host "NAME" -Color Red
 
-$usage = "usage: aes256 [-m encrypt (default)|decrypt] [-t text] [-p passphrase]
+$small_help = "usage: aes256 [-m encrypt (default)|decrypt] [-t text] [-p passphrase]
 `t[-i input_file] [-o output_file]"
 
-$htext = "
+$help_text = "
 NAME
 `taes256 - aes 256 algorithm (the part of cross-language-encryption library) 
 
@@ -94,7 +94,7 @@ if ($p -ne '' ) {
 
 # Print help
 if ($help -or $h) {
-    echo $htext
+    echo $help_text
 } elseif ($m -eq '' -And $p -eq '' -And $i -eq '' -And $o -eq '') {
-    echo $usage
+    echo $small_help
 }
