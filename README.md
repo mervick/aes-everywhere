@@ -9,6 +9,7 @@ It implements OpenSSL compatible cryptography with random generated salt
 ## Implementations
 
  + [Bash/Shell](https://github.com/mervick/aes-everywhere/tree/master/bash)
+ + [Powershell](https://github.com/mervick/aes-everywhere/tree/master/powershell)
  + [C++](https://github.com/mervick/aes-everywhere/tree/master/cpp)
  + [C#](https://github.com/mervick/aes-everywhere/tree/master/net)
  + [GoLang](https://github.com/mervick/aes-everywhere/tree/master/go)
