@@ -12,9 +12,8 @@ openssl
 
 ### Usage:
 ```raw
-aes256 encrypt|decrypt [-p passphrase|--passphrase=passphrase]
-    [-i input_file|--in=input_file] [-o output_file|--out=output_file]
-    [-f format|--format=format]
+aes256 [-m encrypt (default)|decrypt] [-t text] [-p passphrase]
+    [-i input_file] [-o output_file]
 ```
 
 ### Examples:

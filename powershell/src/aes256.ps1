@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
-# aes256.sh
+# aes256.ps1
 # This file is part of AES-everywhere project (https://github.com/mervick/aes-everywhere)
 #
 # This is an implementation of the AES algorithm, specifically CBC mode,
 # with 256 bits key length and PKCS7 padding.
 #
 # Copyright Andrey Izman (c) 2018-2019 <izmanw@gmail.com>
+# Copyright Philip Mayer (c) 2020 <philip.mayer@shadowsith.de>
 # Licensed under the MIT license
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
