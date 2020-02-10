@@ -10,7 +10,7 @@ Requirements: luarocks (lua package manager)<br>
 ### Usage
 
 ```lua
-AES256 = require("aes256")
+local AES256 = require("aes256")
 
 -- encryption
 local enc = AES256.encrypt('TEXT', 'PASSWORD')
