@@ -4,7 +4,7 @@ Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
 ## Lua implementation
 
-Requirements: luarocks (lua package manager)
+Requirements: luarocks (lua package manager)<br>
 `luarocks install openssl`
 
 ### Usage
