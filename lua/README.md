@@ -4,12 +4,13 @@ Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 
 ## Lua implementation
 
-Requirements: openssl
+Requirements: luarocks (lua package manager)<br>
+`luarocks install openssl`
 
 ### Usage
 
 ```lua
-AES256 = require("aes256")
+local AES256 = require("aes256")
 
 -- encryption
 local enc = AES256.encrypt('TEXT', 'PASSWORD')

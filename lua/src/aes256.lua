@@ -26,31 +26,47 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 -- SOFTWARE.
 
--- Requires openssl command line program
+-- Requires lua-openssl (luarocks install openssl)
+
+local openssl = require "openssl"
+local md5 = openssl.digest.get('md5')
+
+-- private
+local function deriveKeyAndIv(passphrase, salt)
+    local di = ""
+    local dx = ""
+
+    for i = 1, 4 do
+        di = md5:digest(di .. passphrase .. salt)
+        dx = dx .. di
+    end
+    return string.sub(dx, 0, 32), string.sub(dx, 33, 48)
+end
+
+-- public
 
 AES256 = {}
 
-AES256.cmd = "echo '%s' | " ..
-        "openssl enc -aes-256-cbc -md md5 -a -A -pass pass:'%s'"
-
-AES256.encrypt = function(text, passphrase)
-    local handle = io.popen(string.format(AES256.cmd, text, passphrase))
-    local result = handle:read("*a")
-    handle:close()
-    return result
+AES256.encrypt = function(input, passphrase)
+    local salt = openssl.random(8)
+    local key, iv = deriveKeyAndIv(passphrase, salt)
+    local aes = openssl.cipher.new('aes-256-cbc', true, key, iv, true, openssl.engine('pkcs7'))
+    local crypted = aes:update(input) .. aes:final()
+    return openssl.base64("Salted__" .. salt .. crypted, true)
 end
 
-AES256.decrypt = function(encrypt, passphrase)
-    local cmd = AES256.cmd .. " -d"
-    local handle = io.popen(string.format(cmd, encrypt, passphrase))
-    local result = handle:read("*a")
-    handle:close()
-    -- check for newline at the end of the string
-    local last_char = string.sub(result, -1)
-    if (last_char == '\n') then
-        result = string.sub(result, 0, string.len(result)-1)
+AES256.decrypt = function(crypted, passphrase)
+    local data = openssl.base64(crypted, false)
+    local salted = string.sub(data, 0, 8)
+    if salted ~= "Salted__" then
+        error("Invalid data")
     end
-    return result
+    local salt = string.sub(data, 9, 16)
+    crypted = string.sub(data, 17, string.len(data))
+    local key, iv = deriveKeyAndIv(passphrase, salt)
+    local aes = openssl.cipher.new('aes-256-cbc', false, key, iv, true, openssl.engine('pkcs7'))
+    crypted = aes:update(crypted) .. aes:final()
+    return crypted
 end
 
 return AES256;
