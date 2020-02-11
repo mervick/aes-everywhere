@@ -7,7 +7,9 @@ Cipher: AES/256/CBC/PKCS7Padding with random generated salt
 Requirements: [openssl](https://luarocks.org/modules/zhaozg/openssl) package  
 
 Installation via [luarocks](https://github.com/luarocks/luarocks) package manager:  
-`luarocks install aes_everywhere`
+```
+luarocks install aes_everywhere
+```
 
 ### Usage
 
