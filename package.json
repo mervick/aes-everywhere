@@ -18,7 +18,7 @@
     "encryption"
   ],
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
     "browserify-shim": "^3.8.12",
