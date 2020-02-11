@@ -1,6 +1,6 @@
 # AES Everywhere - Cross Language Encryption Library
 
-[AES Everywhere]() is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
+[AES Everywhere](https://github.com/mervick/aes-everywhere) is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
 
 This is an implementation of the AES algorithm, specifically CBC mode, with 256 bits key length and PKCS7 padding.
 It implements OpenSSL compatible cryptography with random generated salt
@@ -8,20 +8,34 @@ It implements OpenSSL compatible cryptography with random generated salt
 
 ## [Java](https://www.java.com) implementation
 
+
 ### Installation
 
-Via [maven](https://maven.apache.org/):  
-Add in dependencies of your `pom.xml`
+Via [maven](https://maven.apache.org/), add in dependencies of your `pom.xml`:
 
 ```xml
 <dependencies>
   <dependency>
-    <groupId>com.github.mervick.aes_everywhere</groupId>
-    <artifactId>aes-everywhere</artifactId>
+    <groupId>com.github.mervick</groupId>
+    <artifactId>aes-everywhere-java</artifactId>
     <version>1.2.7</version>
   </dependency>
 </dependencies>
 ```
+
+Via [gradle](https://gradle.org/), add in dependencies of your `build.gradle`:
+```
+dependencies {
+  implementation 'com.github.mervick:aes-everywhere-java:1.2.7'
+}
+```
+
+Building from the sources:
+
+```bash
+mvn package 
+```
+
 
 ### Import Aes256 in your project
 
