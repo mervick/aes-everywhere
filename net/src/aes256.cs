@@ -61,6 +61,17 @@ namespace AesEverywhere
         /// <param name="passphrase">Passphrase</param>
         public string Encrypt(string text, string passphrase)
         {
+            return Encrypt(Encoding.UTF8.GetBytes(text), passphrase);
+        }
+
+        /// <summary>
+        /// Encrypt input bytes with the password using random salt.
+        /// Returns base64 decoded encrypted string.
+        /// </summary>
+        /// <param name="data">Input data (in bytes) to encrypt</param>
+        /// <param name="passphrase">Passphrase</param>
+        public string Encrypt(byte[] data, string passphrase)
+        {
             using (var random = new RNGCryptoServiceProvider())
             {
                 byte[] salt = new byte[8];
@@ -81,11 +92,8 @@ namespace AesEverywhere
                     {
                         using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                         {
-                            using (var swEncrypt = new StreamWriter(csEncrypt))
-                            {
-                                swEncrypt.Write(text);
-                            }
-
+                            csEncrypt.Write(data, 0, data.Length);
+                            csEncrypt.FlushFinalBlock();
                             encrypted = msEncrypt.ToArray();
                         }
                     }
