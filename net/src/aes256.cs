@@ -111,16 +111,27 @@ namespace AesEverywhere
         /// <param name="passphrase">Passphrase</param>
         public string Decrypt(string encrypted, string passphrase)
         {
+            return Encoding.UTF8.GetString(DecryptToBytes(encrypted, passphrase));
+        }
+
+        /// <summary>
+        /// Derypt encrypted data with the password using random salt.
+        /// Returns the decrypted bytes.
+        /// </summary>
+        /// <param name="encrypted">Encrypted data to decrypt</param>
+        /// <param name="passphrase">Passphrase</param>
+        public byte[] DecryptToBytes(string encrypted, string passphrase)
+        {
             byte[] ct = System.Convert.FromBase64String(encrypted);
             if (ct == null || ct.Length <= 0) {
-                return "";
+                return new byte[0];
             }
 
             byte[] salted = new byte[8];
             Array.Copy(ct, 0, salted, 0, 8);
 
             if (Encoding.UTF8.GetString(salted) != "Salted__") {
-                return "";
+                return new byte[0];
             }
 
             byte[] salt = new byte[8];
@@ -131,7 +142,7 @@ namespace AesEverywhere
 
             DeriveKeyAndIv(passphrase, salt);
 
-            string decrypted;
+            byte[] decrypted;
             using (var aes = new RijndaelManaged())
             {
                 aes.BlockSize = BlockSize * 8;
@@ -140,14 +151,13 @@ namespace AesEverywhere
                 aes.Key = key;
                 aes.IV = iv;
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-                using (var msDecrypt = new MemoryStream(cipherText))
+                using (var msDecrypt = new MemoryStream())
                 {
-                    using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Write))
                     {
-                        using (var srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            decrypted = srDecrypt.ReadToEnd();
-                        }
+                        csDecrypt.Write(cipherText, 0, cipherText.Length);
+                        csDecrypt.FlushFinalBlock();
+                        decrypted = msDecrypt.ToArray();
                     }
                 }
             }
