@@ -29,8 +29,8 @@
 import sys
 import base64
 from hashlib import md5
-from Crypto import Random
-from Crypto.Cipher import AES
+from Cryptodome import Random
+from Cryptodome.Cipher import AES
 
 __author__    = "Andrey Izman"
 __email__     = "izmanw@gmail.com"
