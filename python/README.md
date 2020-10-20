@@ -29,7 +29,3 @@ print(encrypted)
 print(aes256.decrypt(encrypted, 'PASSWORD'))
 ```
 
-### Known bugs
-
-AttributeError: module 'time' has no attribute 'clock' with python 3.8  
-ref https://github.com/mervick/aes-everywhere/issues/21
