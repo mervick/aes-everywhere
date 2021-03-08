@@ -21,6 +21,6 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-      aes_everywhere = "src/aes256.lua"
+      aes_everywhere = "lua/src/aes256.lua"
    }
 }
