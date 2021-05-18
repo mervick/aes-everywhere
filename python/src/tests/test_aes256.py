@@ -58,6 +58,10 @@ class TestAes256(unittest.TestCase):
         dec = aes256.decrypt(enc, passw)
         self.assertEqual(u(text), dec, FAIL)
 
+    def test_encrypt_return_type(self):
+        enc_text = aes256.encrypt("Test! @#$%^&*( 😆😵🤡👌 哈罗 こんにちわ Акїў 😺", "pass")
+        self.assertIsInstance(enc_text, bytes)
+
 
 if __name__ == '__main__':
     unittest.main()
