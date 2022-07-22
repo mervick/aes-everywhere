@@ -1,3 +1,5 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://stand-with-ukraine.pp.ua/)
+
 # AES Everywhere - Cross Language Encryption Library  (Bash, C#, GoLang, Java, JavaScript, PHP, Python, Ruby, Swift)
 
 AES Everywhere is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
