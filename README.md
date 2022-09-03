@@ -13,6 +13,7 @@ It implements OpenSSL compatible cryptography with random generated salt
  + [Bash/Shell](https://github.com/mervick/aes-everywhere/tree/master/bash)
  + [Powershell](https://github.com/mervick/aes-everywhere/tree/master/powershell)
  + [C#](https://github.com/mervick/aes-everywhere/tree/master/net)
+ + [Dart](https://github.com/mervick/aes-everywhere/tree/master/dart)
  + [GoLang](https://github.com/mervick/aes-everywhere/tree/master/go)
  + [Java](https://github.com/mervick/aes-everywhere-java)
  + [JavaScript](https://github.com/mervick/aes-everywhere/tree/master/javascript)
