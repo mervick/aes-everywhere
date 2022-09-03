@@ -1,4 +1,6 @@
-# AES Everywhere - Cross Language Encryption Library  (Bash, C++, C#, GoLang, Java, JavaScript, PHP, Python, Ruby, Swift)
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://stand-with-ukraine.pp.ua/)
+
+# AES Everywhere - Cross Language Encryption Library  (Bash, C#, GoLang, Java, JavaScript, PHP, Python, Ruby, Swift)
 
 AES Everywhere is Cross Language Encryption Library which provides the ability to encrypt and decrypt data using a single algorithm in different programming languages and on different platforms.
 
@@ -10,7 +12,6 @@ It implements OpenSSL compatible cryptography with random generated salt
 
  + [Bash/Shell](https://github.com/mervick/aes-everywhere/tree/master/bash)
  + [Powershell](https://github.com/mervick/aes-everywhere/tree/master/powershell)
- + [C++](https://github.com/mervick/aes-everywhere/tree/master/cpp)
  + [C#](https://github.com/mervick/aes-everywhere/tree/master/net)
  + [GoLang](https://github.com/mervick/aes-everywhere/tree/master/go)
  + [Java](https://github.com/mervick/aes-everywhere-java)
