@@ -52,7 +52,7 @@ def encrypt(raw, passphrase):
     @param passphrase: string Passphrase
     @type raw: string
     @type passphrase: string
-    @rtype: string
+    @rtype: bytes
     """
     salt = Random.new().read(8)
     key, iv = __derive_key_and_iv(passphrase, salt)
