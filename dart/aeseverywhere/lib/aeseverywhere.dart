@@ -1,4 +1,4 @@
-/// aes256.dart
+/// aeseverywhere.dart
 /// This file is part of AES-everywhere project (https://github.com/mervick/aes-everywhere)
 ///
 /// This is an implementation of the AES algorithm, CBC mode,
@@ -27,13 +27,16 @@
 
 library aeseverywhere;
 
-import 'package:encrypt/encrypt.dart';
-import 'package:crypto/crypto.dart';
 import 'dart:convert' as convert;
-import 'dart:typed_data';
 import 'dart:math';
+import 'dart:typed_data';
+
+import 'package:crypto/crypto.dart';
+import 'package:encrypt/encrypt.dart';
 
 class Aes256 {
+  Aes256._();
+
   static String encrypt(String text, String passphrase) {
     final random = Random.secure();
     List<int> pass = passphrase.split('').map((ch) => ch.codeUnitAt(0)).toList();
